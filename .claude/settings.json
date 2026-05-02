@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls /Users/joshuashepherd/Desktop/Dev/repos/movemental-content-studio/src/components/video-editor/*.tsx)",
+      "Bash(find /Users/joshuashepherd/Desktop/Dev/repos/my-skills -path *frontend-design* -o -path *.agents*)",
+      "Read(//Users/joshuashepherd/Desktop/Dev/repos/my-skills/**)"
+    ]
+  }
+}

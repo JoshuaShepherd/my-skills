@@ -1,0 +1,22 @@
+{
+  "owner": "bytesagain",
+  "slug": "awesome-postgres",
+  "displayName": "Awesome Postgres",
+  "latest": {
+    "version": "1.0.6",
+    "publishedAt": 1773664684220,
+    "commit": "https://github.com/openclaw/skills/commit/da187f2990753e77843f7d42bb7bf33671bcc0d2"
+  },
+  "history": [
+    {
+      "version": "1.0.5",
+      "publishedAt": 1773661947560,
+      "commit": "https://github.com/openclaw/skills/commit/88a15f90e306d4278b105a067e5edb9aab152567"
+    },
+    {
+      "version": "1.0.0",
+      "publishedAt": 1773443777684,
+      "commit": "https://github.com/openclaw/skills/commit/075aa03a89469c557525f4b78a2d3be8d4afd1cd"
+    }
+  ]
+}
