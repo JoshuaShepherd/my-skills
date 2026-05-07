@@ -14,9 +14,9 @@ Scaffold a new agent: $ARGUMENTS
    - Use `mcp__openai-docs__search_openai_docs` with query "Agents SDK tools" for tool definition patterns
 2. Read existing agent definitions to understand project conventions:
    - `src/agents/chat-coaches/index.ts` — simple agent (tenant-driven prompt, single model)
-   - Read 1-2 files in the ai-lab-agent repo at `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/index.ts` for the function-based config pattern (instructions/tools/modelSettings as functions receiving RunContext)
-   - `/Users/joshuashepherd/Desktop/Dev/repos/movemental-dashboard/src/agents/writing-assistant/index.ts` — multi-mode agent with per-mode temperature/token configs
-   - `/Users/joshuashepherd/Desktop/Dev/repos/movemental-dashboard/src/agents/seo-expert/index.ts` — tool-heavy agent with ordered tool execution
+   - Read 1-2 files in the ai-lab-agent repo at `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/index.ts` for the function-based config pattern (instructions/tools/modelSettings as functions receiving RunContext)
+   - `/Users/joshuashepherd/Desktop/dev/repos/movemental-dashboard/src/agents/writing-assistant/index.ts` — multi-mode agent with per-mode temperature/token configs
+   - `/Users/joshuashepherd/Desktop/dev/repos/movemental-dashboard/src/agents/seo-expert/index.ts` — tool-heavy agent with ordered tool execution
 3. Read the shared infrastructure:
    - `src/agents/shared/enhanced-agent-bridge.ts` — bridge class that wraps agent execution
    - `src/agents/shared/types.ts` — ChatKitRequest, ChatKitEvent, WritingContext types

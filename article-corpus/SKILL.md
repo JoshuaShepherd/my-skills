@@ -15,9 +15,9 @@ $ARGUMENTS should be a topic, concept, keyword, or question (e.g., "APEST", "inc
 
 ### Local Files
 
-**Root path:** `/Users/joshuashepherd/Desktop/Dev/repos/alan-books/corpus/alan_hirsch/`
+**Root path:** `/Users/joshuashepherd/Desktop/dev/repos/alan-books/corpus/alan_hirsch/`
 
-**Manifest:** `/Users/joshuashepherd/Desktop/Dev/repos/alan-books/corpus/alan_hirsch_manifest.json`
+**Manifest:** `/Users/joshuashepherd/Desktop/dev/repos/alan-books/corpus/alan_hirsch_manifest.json`
 - Contains all book/chapter metadata: canonical_id, book_slug, chapter_number, chapter_slug, chapter_title, word_count
 
 **File naming convention:** `{book-slug}-ch{N}-{chapter-slug}.md`
@@ -41,18 +41,24 @@ word_count: 4231
 
 ### Available Books (English Corpus)
 
-| Slug | Full Title | Primary Pillar | Key Topics |
-|------|-----------|----------------|------------|
-| `5q` | 5Q: Reactivating the Original Intelligence and Capacity of the Body of Christ | APEST / 5Q | Five-fold ministry, APEST gifts, church intelligence, ecclesiology |
-| `reframation` | Reframation: Seeing God, People, and Mission Through Reframe Eyes | Christology / Lordship | Theology, image of God, missional imagination, atonement |
-| `rejesus` | ReJesus: A Wild Messiah for a Tame Church | Christology / Lordship | Christology, Jesus-shaped faith, discipleship, lordship |
-| `metanoia` | Metanoia: The Ancient Way Forward | Metanoia / Discipleship | Transformation, conversion, repentance, formation |
-| `disciplism` | Disciplism | Metanoia / Discipleship | Discipleship, mentoring, learning communities |
-| `on-the-verge` | On the Verge: A Journey Into the Apostolic Future of the Church | Movemental / Apostolic | Apostolic imagination, movement dynamics, future church |
-| `fast-forward-to-mission` | Fast Forward to Mission | Movemental / Missional | Mission, movement, apostolic, accelerators |
-| `right-here-right-now` | Right Here, Right Now: Everyday Mission for Everyday People | Missional Church | Incarnational mission, everyday mission, sent life |
+| Slug | Full Title | Primary Pillar | Chapters | Key Topics |
+|------|-----------|----------------|----------|------------|
+| `the-forgotten-ways` | The Forgotten Ways: Reactivating Apostolic Movements | Apostolic Genius / mDNA | 19 | mDNA, Apostolic Genius, 6 elements, movement DNA, Chinese underground church |
+| `the-forgotten-ways-handbook` | The Forgotten Ways Handbook | Apostolic Genius / mDNA | 11 | mDNA assessment, practical application, organizational change |
+| `5q` | 5Q: Reactivating the Original Intelligence and Capacity of the Body of Christ | APEST / 5Q | 17 | Five-fold ministry, APEST gifts, church intelligence, ecclesiology |
+| `the-permanent-revolution` | The Permanent Revolution | APEST / 5Q | 20 | APEST as equipping ecology, apostolic ministry, movement leadership |
+| `reframation` | Reframation: Seeing God, People, and Mission Through Reframe Eyes | Christology / Lordship | 18 | Theology, image of God, missional imagination, atonement |
+| `rejesus` | ReJesus: A Wild Messiah for a Tame Church | Christology / Lordship | 10 | Christology, Jesus-shaped faith, discipleship, lordship |
+| `metanoia` | Metanoia: The Ancient Way Forward | Metanoia / Discipleship | 9 | Transformation, conversion, repentance, formation |
+| `disciplism` | Disciplism | Metanoia / Discipleship | 7 | Discipleship, mentoring, learning communities |
+| `untamed` | Untamed | Metanoia / Discipleship | 14 | Wild gospel, untamed faith, Jesus as wild messiah |
+| `on-the-verge` | On the Verge: A Journey Into the Apostolic Future of the Church | Movemental Thinking | 16 | Apostolic imagination, movement dynamics, future church |
+| `fast-forward-to-mission` | Fast Forward to Mission | Movemental Thinking | 2 | Mission, movement, apostolic, accelerators |
+| `right-here-right-now` | Right Here, Right Now: Everyday Mission for Everyday People | Missional Church | 12 | Incarnational mission, everyday mission, sent life |
+| `the-shaping-of-things-to-come` | The Shaping of Things to Come | Missional Church | 16 | Post-Christendom, incarnational church, missional innovation |
+| `the-faith-of-leap` | The Faith of Leap | Apostolic Genius / mDNA | 10 | Risk, liminality, communitas, pioneering impulse |
 
-**Translations available:** Spanish (`-es`) and Portuguese (`-pt`, `-pt-BR`) versions of most books.
+**Translations available:** Spanish (`-es`), Portuguese (`-pt`, `-pt-BR`), German (`-de`), and French (`-fr`) versions of select books.
 
 ### Supabase Tables
 
@@ -89,12 +95,12 @@ Start with the manifest to find chapter titles before reading full content:
 ```
 Grep the manifest for the search term:
 Pattern: search term keywords
-Path: /Users/joshuashepherd/Desktop/Dev/repos/alan-books/corpus/alan_hirsch_manifest.json
+Path: /Users/joshuashepherd/Desktop/dev/repos/alan-books/corpus/alan_hirsch_manifest.json
 ```
 
 Or scan chapter titles across the corpus:
 ```
-Glob: /Users/joshuashepherd/Desktop/Dev/repos/alan-books/corpus/alan_hirsch/**/*.md
+Glob: /Users/joshuashepherd/Desktop/dev/repos/alan-books/corpus/alan_hirsch/**/*.md
 Then Grep for the topic within those files
 ```
 
@@ -102,7 +108,7 @@ Then Grep for the topic within those files
 
 Use the file naming pattern to read specific chapters:
 ```
-Read: /Users/joshuashepherd/Desktop/Dev/repos/alan-books/corpus/alan_hirsch/{book-slug}/{book-slug}-ch{N}-{chapter-slug}.md
+Read: /Users/joshuashepherd/Desktop/dev/repos/alan-books/corpus/alan_hirsch/{book-slug}/{book-slug}-ch{N}-{chapter-slug}.md
 ```
 
 For a concept likely spanning multiple books, read the most relevant 2–3 chapters (not every chapter).
@@ -175,8 +181,8 @@ Use this to know which books to prioritize for a given pillar:
 | Pillar | Primary Books | Secondary |
 |--------|--------------|-----------|
 | **APEST / 5Q** | 5Q | Reframation, On the Verge |
-| **Christology / Lordship** | ReJesus, Reframation | Metanoia |
+| **Apostolic Genius / mDNA** | The Forgotten Ways | On the Verge, 5Q |
 | **Missional Church** | Right Here Right Now | ReJesus, On the Verge, Fast Forward |
-| **Movemental Thinking** | On the Verge, Fast Forward | 5Q |
+| **Movemental Thinking** | On the Verge, Fast Forward | The Forgotten Ways, 5Q |
 | **Metanoia / Discipleship** | Metanoia, Disciplism | ReJesus |
-| **Apostolic Genius / mDNA** | On the Verge, Fast Forward | 5Q |
+| **Christology / Lordship** | ReJesus, Reframation | Metanoia |

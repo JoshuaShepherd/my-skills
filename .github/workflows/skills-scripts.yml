@@ -1,0 +1,21 @@
+name: Skills scripts
+
+on:
+  push:
+    paths:
+      - "scripts/sync-claude-skills.py"
+      - "scripts/verify-home-skills-in-repo.py"
+  pull_request:
+    paths:
+      - "scripts/sync-claude-skills.py"
+      - "scripts/verify-home-skills-in-repo.py"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax-check sync and verify scripts
+        run: python3 -m py_compile scripts/sync-claude-skills.py scripts/verify-home-skills-in-repo.py
+      - name: Verify home bundle coverage (no-op when ~/.claude/skills absent)
+        run: python3 scripts/verify-home-skills-in-repo.py

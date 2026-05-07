@@ -220,7 +220,7 @@ before assuming things work.
 ### Playbook B — "Re-run the build-time upload now"
 
 ```bash
-# Standard re-run (uses local ~/Desktop/Dev/repos/alan-books corpus)
+# Standard re-run (uses local ~/Desktop/dev/repos/alan-books corpus)
 npx tsx scripts/gemini-corpus-upload.ts
 
 # Force the Vercel/CI clone path for testing

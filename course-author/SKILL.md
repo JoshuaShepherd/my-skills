@@ -15,9 +15,9 @@ $ARGUMENTS should include: course slug, week number, and section type (e.g., `fo
 2. Read `_docs/TRANSFORMATIONAL_COURSE_CHARTER.md` for the Four Necessities
 3. Check the course's existing content for context:
    - `content-library/courses/[slug]/` for existing markdown
-   - The Forgotten Ways course.json at `/Users/joshuashepherd/Desktop/Dev/repos/forgotten-ways-course/editor/data/course.json` — use this as the canonical reference for tone, depth, and structure
+   - The Forgotten Ways course.json at `/Users/joshuashepherd/Desktop/dev/repos/forgotten-ways-course/editor/data/course.json` — use this as the canonical reference for tone, depth, and structure
 4. If corpus material exists, read relevant source chapters:
-   - Check `/Users/joshuashepherd/Desktop/Dev/repos/forgotten-ways-course/_docs/corpus/` or equivalent for book chapters
+   - Check `/Users/joshuashepherd/Desktop/dev/repos/forgotten-ways-course/_docs/corpus/` or equivalent for book chapters
 
 ## The Transformation Loop
 

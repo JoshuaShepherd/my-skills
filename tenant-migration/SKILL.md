@@ -33,9 +33,9 @@ The anti-goal is: "make another Alan site" or "copy and pray."
 
 ## Source Baseline
 
-Unless specified otherwise, migrations start from the **Alan Hirsch repo** at:
+Unless specified otherwise, migrations start from the **Alan Hirsch tenant app** at:
 ```
-~/Desktop/Dev/repos/alan-hirsch
+~/Desktop/dev/repos/movemental-sites/alan-hirsch
 ```
 
 This is the current reference implementation with the most complete feature set.
@@ -94,12 +94,12 @@ Before touching anything:
   - If empty: plan content ingestion as a follow-up, but proceed with migration
 
 - [ ] **Choose a repo name and slug**
-  - Convention: `~/Desktop/Dev/repos/<leader-slug>` (e.g., `brad-brisco`, `mike-frost`)
+  - Convention: `~/Desktop/dev/repos/<leader-slug>` (e.g., `brad-brisco`, `mike-frost`)
   - This becomes the directory name, package.json name, and Vercel project name
 
 - [ ] **Confirm no existing repo at that path**
   ```bash
-  ls ~/Desktop/Dev/repos/<leader-slug> 2>/dev/null && echo "EXISTS — STOP" || echo "Clear"
+  ls ~/Desktop/dev/repos/<leader-slug> 2>/dev/null && echo "EXISTS — STOP" || echo "Clear"
   ```
 
 ---
@@ -121,11 +121,11 @@ rsync -av --progress \
   --exclude='.stitch' \
   --exclude='public/.image-backups' \
   --exclude='public/images/.backup' \
-  ~/Desktop/Dev/repos/alan-hirsch/ \
-  ~/Desktop/Dev/repos/<leader-slug>/
+  ~/Desktop/dev/repos/movemental-sites/alan-hirsch/ \
+  ~/Desktop/dev/repos/<leader-slug>/
 
 # 2. Remove source Git history — start fresh
-cd ~/Desktop/Dev/repos/<leader-slug>
+cd ~/Desktop/dev/repos/<leader-slug>
 rm -rf .git
 
 # 3. Initialize new repo
@@ -150,7 +150,7 @@ git push -u origin main
 ### PHASE 2: PACKAGE IDENTITY
 
 ```bash
-cd ~/Desktop/Dev/repos/<leader-slug>
+cd ~/Desktop/dev/repos/<leader-slug>
 ```
 
 - [ ] **Update `package.json`**
@@ -289,7 +289,7 @@ grep -r "storage/v1/object" src/ --include="*.ts" --include="*.tsx"
 #### 5B. Local Setup
 
 ```bash
-cd ~/Desktop/Dev/repos/<leader-slug>
+cd ~/Desktop/dev/repos/<leader-slug>
 
 # 1. Create .env.local from template
 cp .env.local.example .env.local
@@ -321,7 +321,7 @@ vercel env add NEXT_PUBLIC_APP_URL production
 #### 6A. Create Vercel Project
 
 ```bash
-cd ~/Desktop/Dev/repos/<leader-slug>
+cd ~/Desktop/dev/repos/<leader-slug>
 
 # Link to Vercel (creates new project)
 vercel link
@@ -473,7 +473,7 @@ grep -ri "alan" public/manifest.webmanifest
 ### PHASE 10: INSTALL, BUILD, VERIFY
 
 ```bash
-cd ~/Desktop/Dev/repos/<leader-slug>
+cd ~/Desktop/dev/repos/<leader-slug>
 
 # 1. Install dependencies
 pnpm install

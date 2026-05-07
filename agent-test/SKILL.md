@@ -10,13 +10,13 @@ Write agent tests: $ARGUMENTS
 ## Before Starting
 
 1. Read existing test examples:
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/tests/` — unit tests for catalog, router, citations, tools, context
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/e2e/` — Playwright endpoint specs
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/tests/` — unit tests for catalog, router, citations, tools, context
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/e2e/` — Playwright endpoint specs
    - `src/lib/ai-lab/catalog.test.ts` — catalog validation tests (local)
 2. Read the smoke test patterns:
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/smoke-test-chat.ts` — tool-triggering prompts
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/smoke-test-context.ts` — context propagation
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/smoke-test-fidelity.ts` — book fidelity (file_search + citations)
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/smoke-test-chat.ts` — tool-triggering prompts
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/smoke-test-context.ts` — context propagation
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/smoke-test-fidelity.ts` — book fidelity (file_search + citations)
 3. Check test infrastructure:
    - Run `pnpm test:run` for Vitest (unit tests in `tests/unit/`)
    - Run `pnpm test:e2e` for Playwright (e2e tests in `tests/e2e/`)

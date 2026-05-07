@@ -13,8 +13,8 @@ Work on agent streaming: $ARGUMENTS
    - Use `mcp__openai-docs__search_openai_docs` with query "Agents SDK streaming" for RunStreamEvent types
    - Use `mcp__openai-docs__search_openai_docs` with query "Agents SDK RunStreamEvent" for event shape reference
 2. Read the streaming infrastructure across repos:
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/shared/chatkit-bridge.ts` — `createStreamResponse()` (SSE) + `createPlainTextStreamResponse()` (text)
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/shared/stream-utils.ts` — `extractTextDelta()` from RunStreamEvent
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/shared/chatkit-bridge.ts` — `createStreamResponse()` (SSE) + `createPlainTextStreamResponse()` (text)
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/shared/stream-utils.ts` — `extractTextDelta()` from RunStreamEvent
    - `src/agents/shared/enhanced-agent-bridge.ts` — bridge streaming pipeline
    - `src/agents/shared/chatkit-bridge.ts` — local ChatKit bridge
 3. Read the client-side transport:

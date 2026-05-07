@@ -1,83 +1,160 @@
 ---
 name: course-audit
-description: Audit course content for structural integrity, voice fidelity, pedagogical coherence, and alignment with the transformation loop. Use to validate authored content before it goes to the platform.
+description: Audit the course learn experience — checks section components, sidebar rendering, progress tracking, responsiveness, design tokens, and accessibility. Use before shipping a course.
 user-invocable: true
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Grep, Glob, Bash
 ---
 
-Audit course content: $ARGUMENTS
+Audit the course learn experience: $ARGUMENTS
 
-$ARGUMENTS should specify: course slug and optionally week number or section type. If empty, audit the entire course.
+$ARGUMENTS should be a course slug or "all" for the full learn system. If empty, audit the shared learn infrastructure.
 
 ## Before Starting
 
-1. Read `courses/CONTENT_QUALITY_GUIDE.md` — checklist, scoring rubric, and craft guide (primary audit reference)
-2. Read `courses/COURSE_STRATEGY.md` — the canonical structure reference
-3. Read `courses/ALAN_HIRSCH_VOICE_PROMPTING_MASTER_GUIDE.md` — voice system
-4. Read all content for the course in `courses/courses/[slug]/`
+1. Read `src/components/courses/sections/SectionContent.tsx` — the section router
+2. Read `src/lib/config/lesson-types.ts` — canonical types, labels, icons
+3. Read `src/lib/schemas/course-learn.ts` — SECTION_TYPES
+4. Read `src/components/courses/learn/CourseLearnLayout.tsx` — layout structure
+5. Read `src/components/courses/learn/CourseLearnSidebar.tsx` — sidebar
+6. Read `src/components/courses/learn/LessonPanel.tsx` — lesson wrapper
+7. Read `src/components/courses/learn/LessonContent.tsx` — content dispatcher
 
-## Scoring
+## Audit Checks
 
-Use the 0–100 rubric in `CONTENT_QUALITY_GUIDE.md` Part 2. Score each of the 10 dimensions (0–10), apply weights, and sum. Report both the dimension scores and the weighted total. Use the interpretation table to assign a rating (Exceptional / Strong / Solid / Developing / Incomplete / Not ready).
+### 1. SECTION COMPONENT COVERAGE
 
-## Audit Dimensions
+For every type in SECTION_TYPES, verify a component exists:
 
-### 1. Structural Integrity
-- All 8 weeks present?
-- Each core week (2-7) has all 8 transformation loop sections in correct order?
-- Week 1 has orientation sections? Week 8 has synthesis/sending sections?
-- Word counts within targets for each section type?
+- [ ] Grep `SectionContent.tsx` for each section_type case
+- [ ] Verify the import exists and the component file is present
+- [ ] Check the fallback case (should be ReadingSection)
+- [ ] Flag any SECTION_TYPES that have no dedicated component
 
-### 2. Voice Fidelity
-Score each teaching section against the Five Voice Markers:
-| Marker | Weight | Min |
-|--------|--------|-----|
-| Christocentric Anchoring | 30% | 0.7 |
-| Pastoral Warmth | 20% | 0.5 |
-| Narrative Imagery | 15% | 0.6 |
-| Theological Depth | 10% | 0.7 |
-| Prophetic Intensity | 25% | 0.5-0.8 |
+If auditing a specific course, also check:
+- [ ] All section_types used in the course data have matching components
+- [ ] No unknown types in the course data
 
-Flag any failure modes: corporate tone, antithesis patterns, missing Christocentric anchor, practice before grounding.
+### 2. SIDEBAR RENDERING
 
-### 3. Pedagogical Coherence
-- Does each dissonance prompt actually create productive tension?
-- Does each teaching section advance the course narrative (not just cover a topic)?
-- Do case studies show the concept at work (not summarize the teaching)?
-- Are action steps concrete, time-boxed, and doable in 7 days?
-- Do reflection prompts look backward at action taken?
-- Do cohort meetings create genuine shared risk?
+- [ ] All lesson types have entries in LESSON_TYPE_LABELS (no raw keys shown)
+- [ ] All lesson types have entries in LESSON_TYPE_ICONS (no missing icons)
+- [ ] Week grouping renders correctly (weeks numbered 1-8)
+- [ ] Section count per week is displayed
+- [ ] Progress indicators work (completed badge, percentage)
+- [ ] Active section is highlighted
+- [ ] Mobile drawer opens/closes correctly (check responsive logic)
 
-### 4. Arc Integrity
-- Does the course build progressively across weeks?
-- Is there a Christocentric spine connecting all weeks?
-- Does Week 1 orient without overwhelming?
-- Does Week 8 synthesize and send (not just summarize)?
-- Would a learner who completed all 8 weeks be genuinely formed — or just informed?
+### 3. LEARN LAYOUT
 
-### 5. Theological Alignment
-- Do the frameworks (mDNA, APEST, etc.) appear as theological realities, not topics?
-- Is Scripture woven into argument (not proof-texted)?
-- Are historical examples accurate and well-sourced?
-- Does the content honor Alan's actual position (check corpus material)?
+- [ ] Desktop: Sidebar (280px) + flex-1 main content
+- [ ] Mobile: Drawer sidebar with backdrop
+- [ ] Sticky sidebar with correct height calc (`calc(100vh - var(--header-height))`)
+- [ ] Content max-width: `max-w-[var(--measure,65ch)]`
+- [ ] Prev/next navigation works across week boundaries
+- [ ] URL deep linking: `?week=N&section=slug` params handled
+- [ ] Keyboard: Escape closes mobile sidebar
+
+### 4. DESIGN TOKEN COMPLIANCE
+
+Scan all course components for violations:
+
+- [ ] No hardcoded colors (`bg-blue-*`, `text-gray-*`, hex values, rgb())
+- [ ] All colors use semantic tokens (`bg-primary`, `text-muted-foreground`, `border-border`)
+- [ ] No hardcoded font sizes (use Tailwind scale)
+- [ ] No hardcoded spacing (use Tailwind/CSS variable scale)
+- [ ] `course-content-html` class used on all dangerouslySetInnerHTML containers
+- [ ] Dark mode works (no light-only styles)
+
+Search patterns:
+```
+# Hardcoded colors (should find zero)
+grep -r "bg-\(red\|blue\|green\|yellow\|gray\|slate\|zinc\|neutral\|stone\)" src/components/courses/
+grep -r "#[0-9a-fA-F]\{3,6\}" src/components/courses/
+grep -r "rgb\|rgba" src/components/courses/
+```
+
+### 5. TENANT ISOLATION
+
+- [ ] No hardcoded tenant-specific strings in course components
+- [ ] Course titles/descriptions come from data, not hardcoded
+- [ ] Feature flags checked where applicable (e.g., `tenant.features.chat` for Formation Companion)
+- [ ] Uses `tenantConfig` or `useTenant()` for any tenant-varying text
+
+### 6. ACCESSIBILITY
+
+- [ ] All interactive elements have visible focus states
+- [ ] ARIA labels on icon-only buttons (sidebar collapse, prev/next)
+- [ ] Heading hierarchy: H1 (course title) → H2 (section title) → H3+ (content headings)
+- [ ] Tab order is logical (sidebar → main content → navigation)
+- [ ] Screen reader: section type announced (via labels, not just icons)
+- [ ] Tap targets minimum 44x44px (sidebar items, navigation buttons)
+- [ ] `prefers-reduced-motion` respected on any animations
+- [ ] Video sections: captions/transcript available (or flagged as needed)
+
+### 7. DATA FLOW & HOOKS
+
+- [ ] No raw `fetch()` calls — all data via React Query hooks
+- [ ] Error states handled (course not found, section not found)
+- [ ] Loading states shown (skeleton or spinner)
+- [ ] Empty states handled (no sections in a week, no content in a section)
+- [ ] Progress mutations use optimistic updates (or at minimum, invalidate correctly)
+
+### 8. SECTION COMPONENT QUALITY (spot check 3-4 sections)
+
+For each section component checked:
+- [ ] Props: `{ section: CourseSection }` — correct type
+- [ ] HTML content: rendered via `dangerouslySetInnerHTML` with `course-content-html` class
+- [ ] Child items: maps reflection_questions/discussion_prompts/exercises arrays correctly
+- [ ] Local state: managed with useState, not leaking to parent
+- [ ] shadcn/ui: uses Card, Button, Textarea etc. — not raw HTML
+- [ ] No console.log or debug code
 
 ## Output Format
 
-For each dimension, provide:
-- **Score**: Pass / Needs Work / Fail
-- **Evidence**: Specific sections with specific issues
-- **Recommendations**: Actionable revision guidance
+```
+## Course Learn Audit: [slug or "Infrastructure"]
 
-End with a summary: overall readiness, top 3 priorities for revision, and whether the course is ready for platform ingestion.
+### Overall: X/8 checks passing
 
-### 6. Chat Section Quality (New)
+### 1. Section Coverage: ✅/❌
+- Covered: [N] / [total SECTION_TYPES]
+- Missing components: [list]
+- Unused components: [list]
 
-- Do all chat sections (dissonance, action, reflection) have both **learner priming** and **companion shaping** subsections?
-- Does companion shaping include: goal, opening moves, constraints, and closing guidance?
-- Does the dissonance companion avoid resolving the week's theology?
-- Does the action companion ensure one step, one time box, one named witness?
-- Does the reflection companion include compassionate handling for learners who did not complete the step?
+### 2. Sidebar: ✅/❌
+- [details]
 
-### 7. Checklist Compliance
+### 3. Layout: ✅/❌
+- [details]
 
-Run the full checklist from `CONTENT_QUALITY_GUIDE.md` Part 1 (sections A–F). Report any unchecked items.
+### 4. Design Tokens: ✅/❌
+- Violations found: [N]
+- [file:line — violation description]
+
+### 5. Tenant Isolation: ✅/❌
+- [details]
+
+### 6. Accessibility: ✅/❌
+- [details]
+
+### 7. Data Flow: ✅/❌
+- [details]
+
+### 8. Component Quality: ✅/❌
+- Spot-checked: [component names]
+- [details]
+
+### Priority Fixes
+1. [HIGH] — [description] — [file:line]
+2. [MEDIUM] — [description] — [file:line]
+3. [LOW] — [description] — [file:line]
+```
+
+## Rules
+
+- 8 weeks, numbered 1-8. No Week 0.
+- Read actual code — don't assume based on file names
+- Use Grep and Glob for systematic scans, not manual file-by-file
+- Be specific: report file paths and line numbers for every issue
+- Distinguish between issues in shared infrastructure vs. course-specific content
+- This audit is about the learn experience UX/code quality — for Charter/content validation use `/course-validate`

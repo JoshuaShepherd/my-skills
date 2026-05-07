@@ -13,11 +13,11 @@ Create or modify an agent tool: $ARGUMENTS
    - Use `mcp__openai-docs__search_openai_docs` with query "Agents SDK tool definition" for current `tool()` helper signature
    - Use `mcp__openai-docs__search_openai_docs` with query "Agents SDK function tools parameters" for parameter schema patterns
 2. Read existing tool implementations:
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/tools/base.ts` — search_books, file_search tools with caching + metrics
-   - `/Users/joshuashepherd/Desktop/Dev/repos/movemental-dashboard/src/agents/seo-expert/tools.ts` — 9-tool suite (analyze, research, score, optimize, generate)
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/tools/utils.ts` — `executeToolWithMetrics()`, timeout constants
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/tools/base.ts` — search_books, file_search tools with caching + metrics
+   - `/Users/joshuashepherd/Desktop/dev/repos/movemental-dashboard/src/agents/seo-expert/tools.ts` — 9-tool suite (analyze, research, score, optimize, generate)
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/tools/utils.ts` — `executeToolWithMetrics()`, timeout constants
 3. Read the shared tool infrastructure:
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/services/toolCacheService.ts` — param-based LRU caching with TTL
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/services/toolCacheService.ts` — param-based LRU caching with TTL
 
 ## Tool Template
 

@@ -14,13 +14,13 @@ Build or modify RAG pipeline: $ARGUMENTS
    - Use `mcp__openai-docs__search_openai_docs` with query "file search tool" for file_search tool configuration
    - Use `mcp__openai-docs__search_openai_docs` with query "retrieval augmented generation" for RAG best practices
 2. Read the existing RAG implementation in ai-lab-agent:
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/retrieval/router.ts` — intent classification and corpus routing
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/retrieval/search.ts` — full pipeline (search → filter → re-sort → cite)
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/retrieval/citations/parseSource.ts` — file path → book/chapter/section
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/retrieval/citations/renderSources.ts` — citation line + sources block
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/retrieval/router.ts` — intent classification and corpus routing
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/retrieval/search.ts` — full pipeline (search → filter → re-sort → cite)
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/retrieval/citations/parseSource.ts` — file path → book/chapter/section
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/retrieval/citations/renderSources.ts` — citation line + sources block
 3. Read the vector store integration:
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/shared/tools.ts` — `executeFileSearch()` using OpenAI Vector Store Search API
-   - `/Users/joshuashepherd/Desktop/Dev/repos/movemental-dashboard/src/lib/writing-assistant/file-search.ts` — org-specific vector store lookup
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/shared/tools.ts` — `executeFileSearch()` using OpenAI Vector Store Search API
+   - `/Users/joshuashepherd/Desktop/dev/repos/movemental-dashboard/src/lib/writing-assistant/file-search.ts` — org-specific vector store lookup
 
 ## RAG Pipeline Architecture
 

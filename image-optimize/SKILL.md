@@ -19,7 +19,7 @@ $ARGUMENTS should include:
 
 ### Local Images Repo (source of truth for raw assets)
 ```
-/Users/joshuashepherd/Desktop/Dev/repos/images/
+/Users/joshuashepherd/Desktop/dev/repos/images/
   {tenant-slug}/              # alan-hirsch, brad-brisco, josh-shepherd, movemental, youthfront
     art/                      # Abstract art, portal icons, pathway illustrations
     articles/                 # Article feature images
@@ -57,10 +57,10 @@ $ARGUMENTS should include:
 
 ## Before Starting
 
-1. Confirm the images repo exists at `/Users/joshuashepherd/Desktop/Dev/repos/images/`
-2. Confirm env vars are available in the alan-hirsch project:
+1. Confirm the images repo exists at `/Users/joshuashepherd/Desktop/dev/repos/images/`
+2. Confirm env vars are available in the tenant app project:
    ```bash
-   cd /Users/joshuashepherd/Desktop/Dev/repos/alan-hirsch && grep SUPABASE_SERVICE_ROLE_KEY .env.local
+   cd /Users/joshuashepherd/Desktop/dev/repos/movemental-sites/alan-hirsch && grep SUPABASE_SERVICE_ROLE_KEY .env.local
    ```
 3. Identify the scope — which tenant and/or category to process
 4. Inventory source files: count, formats, sizes
@@ -71,7 +71,7 @@ $ARGUMENTS should include:
 
 ```bash
 # Count files by tenant and format
-find /Users/joshuashepherd/Desktop/Dev/repos/images/{TENANT} -type f \
+find /Users/joshuashepherd/Desktop/dev/repos/images/{TENANT} -type f \
   -not -name '.DS_Store' \
   | sed 's/.*\.//' | sort | uniq -c | sort -rn
 ```
@@ -184,7 +184,7 @@ Use the Supabase JS client with the service role key.
 import { createClient } from "@supabase/supabase-js";
 
 const BUCKET = "media-library";
-const IMAGES_REPO = "/Users/joshuashepherd/Desktop/Dev/repos/images";
+const IMAGES_REPO = "/Users/joshuashepherd/Desktop/dev/repos/images";
 
 async function uploadToStorage(localPath: string, dryRun = false) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -247,10 +247,10 @@ curl -s -o /dev/null -w "%{http_code}" "https://vhaiiiykcukrlyvwlgip.supabase.co
 
 ## Execution Strategy
 
-Write an inline Node script (using `npx tsx`) that performs the full pipeline. Run it from the alan-hirsch project directory so env vars are accessible.
+Write an inline Node script (using `npx tsx`) that performs the full pipeline. Run it from the tenant app project directory so env vars are accessible.
 
 ```bash
-cd /Users/joshuashepherd/Desktop/Dev/repos/alan-hirsch && npx tsx -e '
+cd /Users/joshuashepherd/Desktop/dev/repos/movemental-sites/alan-hirsch && npx tsx -e '
   // inline script here
 '
 ```
@@ -258,7 +258,7 @@ cd /Users/joshuashepherd/Desktop/Dev/repos/alan-hirsch && npx tsx -e '
 Or, for larger operations, write a temporary script file:
 
 ```bash
-cd /Users/joshuashepherd/Desktop/Dev/repos/alan-hirsch && cat > /tmp/image-optimize.ts << 'SCRIPT'
+cd /Users/joshuashepherd/Desktop/dev/repos/movemental-sites/alan-hirsch && cat > /tmp/image-optimize.ts << 'SCRIPT'
 // full script
 SCRIPT
 npx tsx /tmp/image-optimize.ts

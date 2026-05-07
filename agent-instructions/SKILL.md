@@ -13,16 +13,16 @@ Author or refine agent instructions: $ARGUMENTS
    - Use `mcp__openai-docs__search_openai_docs` with query "system instructions best practices" for latest recommendations
    - Use `mcp__openai-docs__search_openai_docs` with query "agent instructions" for agents-specific patterns
 2. Read the existing instruction architecture to understand the composable pattern:
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/core.ts` — identity + voice markers + failure modes
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/themes.ts` — theme-specific layers (metanoia, movemental, mdna)
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/modes.ts` — pedagogical modes (teacher, coach, reflection, mentor, companion)
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/styles.ts` — interaction styles (conversation, challenge, socratic, evaluative, explainer)
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/context.ts` — dynamic user context per run
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/core.ts` — identity + voice markers + failure modes
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/themes.ts` — theme-specific layers (metanoia, movemental, mdna)
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/modes.ts` — pedagogical modes (teacher, coach, reflection, mentor, companion)
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/styles.ts` — interaction styles (conversation, challenge, socratic, evaluative, explainer)
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/context.ts` — dynamic user context per run
 3. Read the writing assistant instruction pattern:
-   - `/Users/joshuashepherd/Desktop/Dev/repos/movemental-dashboard/src/agents/writing-assistant/instructions.ts` — `buildWritingAssistantPrompt()` with pluggable content sources
-   - `/Users/joshuashepherd/Desktop/Dev/repos/movemental-dashboard/src/agents/writing-assistant/instructions/identity.ts` — voice identity template
-   - `/Users/joshuashepherd/Desktop/Dev/repos/movemental-dashboard/src/agents/writing-assistant/instructions/content-forms.ts` — content form templates
-   - `/Users/joshuashepherd/Desktop/Dev/repos/movemental-dashboard/src/agents/writing-assistant/instructions/examples.ts` — voice calibration examples
+   - `/Users/joshuashepherd/Desktop/dev/repos/movemental-dashboard/src/agents/writing-assistant/instructions.ts` — `buildWritingAssistantPrompt()` with pluggable content sources
+   - `/Users/joshuashepherd/Desktop/dev/repos/movemental-dashboard/src/agents/writing-assistant/instructions/identity.ts` — voice identity template
+   - `/Users/joshuashepherd/Desktop/dev/repos/movemental-dashboard/src/agents/writing-assistant/instructions/content-forms.ts` — content form templates
+   - `/Users/joshuashepherd/Desktop/dev/repos/movemental-dashboard/src/agents/writing-assistant/instructions/examples.ts` — voice calibration examples
 
 ## Instruction Architecture
 

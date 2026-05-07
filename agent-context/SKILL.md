@@ -10,8 +10,8 @@ Work on agent context: $ARGUMENTS
 ## Before Starting
 
 1. Read the context system across repos:
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/context.ts` — dynamic context section built per run
-   - `/Users/joshuashepherd/Desktop/Dev/repos/ai-lab-agent/src/lib/chat/build-user-context-instructions.ts` — renders human-readable blocks from user profile
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/agents/ai-lab/instructions/context.ts` — dynamic context section built per run
+   - `/Users/joshuashepherd/Desktop/dev/repos/ai-lab-agent/src/lib/chat/build-user-context-instructions.ts` — renders human-readable blocks from user profile
    - `src/lib/ai-lab/build-user-context-blocks.ts` — `buildUserContextBlocksNew()` for template-aligned context
    - `src/lib/ai-lab/assemble-user-context.ts` — draft → agent context mapping
    - `src/lib/ai-lab/context-schema-template.ts` — `AILabNewContextDraft` schema

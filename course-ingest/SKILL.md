@@ -21,7 +21,7 @@ $ARGUMENTS should be a course slug or path to the content directory. If empty, a
 Search for content in these locations (in order):
 
 1. `content-library/courses/[slug]/` — project content library
-2. `/Users/joshuashepherd/Desktop/Dev/repos/forgotten-ways-course/docs/` — standalone course repo (for forgotten-ways)
+2. `/Users/joshuashepherd/Desktop/dev/repos/forgotten-ways-course/docs/` — standalone course repo (for forgotten-ways)
 3. A path provided directly by the user
 
 Look for:

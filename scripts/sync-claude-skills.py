@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Discover Claude skill bundles under movemental and ~/Desktop/Dev/repos, then
-rsync them into this repo (my-skills) as the single source of truth.
+Discover Claude skill bundles under movemental, ~/Desktop/Dev/repos, and user
+global skill dirs (~/.claude/skills, ~/.agents/skills), then rsync them into
+this repo (my-skills) as the single source of truth.
 
 Walks the full directory tree (nested monorepos like movemental-sites/<site>/).
 
@@ -10,13 +11,16 @@ Skill locations:
   - <tree>/**/.cursor/skills/<skill-name>/   → cursor/<skill-name>/
   - <tree>/**/.agents/skills/<skill-name>/   → agents/<skill-name>/
   - <tree>/**/skills/repo-specific/<portal>/<skill-name>/
+  - ~/.claude/skills/<name>/  → <name>/  (or agents/<name>/ if symlink → ~/.agents/skills)
+  - ~/.agents/skills/<name>/  → agents/<name>/
 
 Excludes: .git, node_modules, _reference, this repo (my-skills), common build dirs.
 
 Conflict policy for duplicate skill-name across repos:
   1) movemental wins over other repos
-  2) else lexicographically smallest repo path wins
-  3) tie-break: newest mtime on SKILL.md (or skill.md)
+  2) project repos win over ~/.claude and ~/.agents home bundles
+  3) else lexicographically smallest repo path wins
+  4) tie-break: newest mtime on SKILL.md (or skill.md)
 """
 
 from __future__ import annotations
@@ -33,6 +37,10 @@ MY_SKILLS = Path(__file__).resolve().parent.parent
 MY_SKILLS_RESOLVED = MY_SKILLS.resolve()
 MOVEMENTAL = Path.home() / "Desktop" / "movemental"
 DEV_REPOS = Path.home() / "Desktop" / "Dev" / "repos"
+HOME_CLAUDE_ROOT = Path.home() / ".claude"
+HOME_AGENTS_ROOT = Path.home() / ".agents"
+HOME_CLAUDE_SKILLS = HOME_CLAUDE_ROOT / "skills"
+HOME_AGENTS_SKILLS = HOME_AGENTS_ROOT / "skills"
 
 MARKERS = ("SKILL.md", "skill.md")
 
@@ -70,19 +78,68 @@ def hits_from_standard_skills_dir(skills_dir: Path, dest_prefix: str | None) -> 
     for skill_dir in sorted(skills_dir.iterdir()):
         if not skill_dir.is_dir():
             continue
-        m = marker_path(skill_dir)
+        resolved = skill_dir.resolve()
+        m = marker_path(resolved)
         if not m:
             continue
         key = skill_dir.name if dest_prefix is None else f"{dest_prefix}/{skill_dir.name}"
         hits.append(
             SkillHit(
                 dest_key=key,
-                src_dir=skill_dir.resolve(),
+                src_dir=resolved,
                 repo_root=repo_root,
                 marker=m.resolve(),
             )
         )
     return hits
+
+
+def hits_from_home_claude_skills() -> list[SkillHit]:
+    """
+    ~/.claude/skills/<name>/ → repo root <name>/ unless the bundle resolves
+    under ~/.agents/skills/ (e.g. symlink) → agents/<name>/.
+    """
+    hits: list[SkillHit] = []
+    if not HOME_CLAUDE_SKILLS.is_dir():
+        return hits
+    agents_root: Path | None = None
+    if HOME_AGENTS_SKILLS.is_dir():
+        try:
+            agents_root = HOME_AGENTS_SKILLS.resolve()
+        except OSError:
+            agents_root = None
+    repo_root = HOME_CLAUDE_ROOT
+    for skill_dir in sorted(HOME_CLAUDE_SKILLS.iterdir()):
+        if not skill_dir.is_dir():
+            continue
+        try:
+            resolved = skill_dir.resolve()
+        except OSError:
+            continue
+        m = marker_path(resolved)
+        if not m:
+            continue
+        under_agents = bool(
+            agents_root
+            and (resolved == agents_root or agents_root in resolved.parents)
+        )
+        key = f"agents/{skill_dir.name}" if under_agents else skill_dir.name
+        hits.append(
+            SkillHit(
+                dest_key=key,
+                src_dir=resolved,
+                repo_root=repo_root,
+                marker=m.resolve(),
+            )
+        )
+    return hits
+
+
+def hits_from_home_agents_skills() -> list[SkillHit]:
+    """~/.agents/skills/<name>/ → agents/<name>/"""
+    if not HOME_AGENTS_SKILLS.is_dir():
+        return []
+    return hits_from_standard_skills_dir(HOME_AGENTS_SKILLS, "agents")
 
 
 def hits_from_repo_specific(repo_specific: Path) -> list[SkillHit]:
@@ -152,17 +209,23 @@ def discover_in_tree(tree_root: Path) -> list[SkillHit]:
     return hits
 
 
-def movemental_rank(repo_root: Path) -> int:
+def repo_rank(repo_root: Path) -> int:
+    """Lower wins. movemental < project repos < home ~/.claude / ~/.agents."""
     try:
-        return 0 if repo_root.resolve() == MOVEMENTAL.resolve() else 1
+        r = repo_root.resolve()
+        if MOVEMENTAL.is_dir() and r == MOVEMENTAL.resolve():
+            return 0
+        if r == HOME_CLAUDE_ROOT.resolve() or r == HOME_AGENTS_ROOT.resolve():
+            return 2
     except OSError:
-        return 1
+        pass
+    return 1
 
 
 def choose_canonical(group: list[SkillHit]) -> SkillHit:
     def sort_key(h: SkillHit) -> tuple:
         mtime = -h.marker.stat().st_mtime
-        return (movemental_rank(h.repo_root), str(h.repo_root), mtime)
+        return (repo_rank(h.repo_root), str(h.repo_root), mtime)
 
     return sorted(group, key=sort_key)[0]
 
@@ -183,6 +246,9 @@ def main() -> int:
 
     if DEV_REPOS.is_dir():
         all_hits.extend(discover_in_tree(DEV_REPOS))
+
+    all_hits.extend(hits_from_home_claude_skills())
+    all_hits.extend(hits_from_home_agents_skills())
 
     by_key: dict[str, list[SkillHit]] = {}
     for h in all_hits:
@@ -217,10 +283,16 @@ def main() -> int:
         }
         synced += 1
 
+    scan_roots = [str(MOVEMENTAL), str(DEV_REPOS)]
+    if HOME_CLAUDE_SKILLS.is_dir():
+        scan_roots.append(str(HOME_CLAUDE_SKILLS.resolve()))
+    if HOME_AGENTS_SKILLS.is_dir():
+        scan_roots.append(str(HOME_AGENTS_SKILLS.resolve()))
+
     manifest = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "my_skills_root": str(MY_SKILLS),
-        "scan_roots": [str(MOVEMENTAL), str(DEV_REPOS)],
+        "scan_roots": scan_roots,
         "skill_count": synced,
         "skills": manifest_skills,
     }

@@ -44,22 +44,22 @@ Otherwise, run the planning logic from `article-plan`:
 Before writing, pull relevant passages from Alan's books. This grounds the article in his actual words and enables proper citations.
 
 ### Local corpus path:
-`/Users/joshuashepherd/Desktop/Dev/repos/alan-books/corpus/alan_hirsch/`
+`/Users/joshuashepherd/Desktop/dev/repos/alan-books/corpus/alan_hirsch/`
 
 ### Pillar-to-book map:
 
 | Pillar | Primary Books | Secondary |
 |--------|--------------|-----------|
-| APEST / 5Q | `5q` | `reframation`, `on-the-verge` |
-| Apostolic Genius / mDNA | `on-the-verge`, `fast-forward-to-mission` | `5q` |
-| Missional Church | `right-here-right-now` | `rejesus`, `on-the-verge` |
-| Movemental Thinking | `on-the-verge`, `fast-forward-to-mission` | `5q` |
-| Metanoia / Discipleship | `metanoia`, `disciplism` | `rejesus` |
-| Christology / Lordship | `rejesus`, `reframation` | `metanoia` |
+| **APEST / 5Q** | `5q` | `reframation`, `on-the-verge` |
+| **Apostolic Genius / mDNA** | `the-forgotten-ways` | `on-the-verge`, `5q` |
+| **Missional Church** | `right-here-right-now` | `rejesus`, `on-the-verge`, `fast-forward-to-mission` |
+| **Movemental Thinking** | `on-the-verge`, `fast-forward-to-mission` | `the-forgotten-ways`, `5q` |
+| **Metanoia / Discipleship** | `metanoia`, `disciplism` | `rejesus` |
+| **Christology / Lordship** | `rejesus`, `reframation` | `metanoia` |
 
 ### Research process:
 1. Use the manifest to identify the most relevant chapter titles before reading full content:
-   - Glob: `/Users/joshuashepherd/Desktop/Dev/repos/alan-books/corpus/alan_hirsch/**/*.md`
+   - Glob: `/Users/joshuashepherd/Desktop/dev/repos/alan-books/corpus/alan_hirsch/**/*.md`
    - Grep for the topic keyword across those files
 2. Read the 3–6 most relevant chapters in full (not every chapter — be selective)
 3. Extract:

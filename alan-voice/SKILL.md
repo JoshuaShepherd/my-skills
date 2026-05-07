@@ -9,6 +9,8 @@ Write content in Alan Hirsch's voice: $ARGUMENTS
 
 $ARGUMENTS should specify the task: what to write (content type, topic, length), OR pass a piece of existing content with `audit:` or `rewrite:` prefix to check or improve voice fidelity. If no arguments are given, ask the user what they need.
 
+**Full multi-model implementation guide (Claude, OpenAI, Gemini, Grok), portable system prompt, content form templates, voice fidelity checker, and test suite:** `_docs/_prompts/ALAN_HIRSCH_VOICE_PROMPTING_MASTER_GUIDE.md`
+
 ---
 
 ## Step 1 — Identify the Task

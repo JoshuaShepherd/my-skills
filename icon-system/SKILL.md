@@ -123,7 +123,7 @@ After creating or reading the wrapper, confirm it satisfies:
 
 ## Step 4 — Document the Usage Conventions
 
-Output the following as the Icon System Reference. Save to `_docs/_build/design/ICON_SYSTEM.md` (same as `_docs/design/ICON_SYSTEM.md` via symlink) if it doesn't exist:
+Output the following as the Icon System Reference. Save to `_docs/design/ICON_SYSTEM.md` if it doesn't exist:
 
 ---
 
@@ -249,9 +249,9 @@ For SVG illustrations (empty states, onboarding, marketing):
 
 ---
 
-## Step 5 — Check for `_docs/_build/design/` directory
+## Step 5 — Check for `_docs/design/` directory
 
-Design docs live under `_docs/_build/design/` (`_docs/design/` symlinks here). Save or update `ICON_SYSTEM.md` there.
+If it doesn't exist, create it and save `ICON_SYSTEM.md` there. If `_docs/design/ICON_SYSTEM.md` already exists, update it with any gaps.
 
 ## Output Format
 
@@ -265,7 +265,7 @@ Design docs live under `_docs/_build/design/` (`_docs/design/` symlinks here). S
 
 ### Conventions Document
 - Status: [Created / Already exists / Updated]
-- Path: `_docs/_build/design/ICON_SYSTEM.md`
+- Path: _docs/design/ICON_SYSTEM.md
 
 ### Migration Scope
 - Raw Lucide usages found: X (run /icon-audit to fix)
