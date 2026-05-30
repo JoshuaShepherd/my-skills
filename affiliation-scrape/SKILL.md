@@ -1,9 +1,11 @@
 ---
 name: affiliation-scrape
-description: Research and document all organizations a leader/author is affiliated with — publishers, speaking bureaus, conferences, denominations, media outlets, endorsing ministries, and academic institutions. Uses browser search to build a structured affiliation record for use in logo strips and social proof sections.
+description: Research organizations a leader is affiliated with AND fetch logos for them. Output is a JSON record optimized for rendering a logo strip / social-proof section on the platform site. NOT the same as substrate organizational affiliations — for the substrate's structured org list, use `movement-leader-substrate`.
 user-invocable: true
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, WebSearch, WebFetch, mcp__chrome-devtools__navigate_page, mcp__chrome-devtools__take_screenshot, mcp__chrome-devtools__evaluate_script, mcp__chrome-devtools__new_page, mcp__chrome-devtools__list_pages
 ---
+
+> **Scope guard.** This skill exists to populate **logo strips and social-proof sections on the platform site**. Its output (`content-library/affiliations/{slug}.json`) carries logo URLs, logo quality grades, strip groupings, and prominence scores — fields that the [`movement-leader-substrate`](../movement-leader-substrate/SKILL.md) intentionally omits. If you are working on the substrate document, do NOT invoke this skill — substrate's organizational affiliations come from `network/organizations.md` and use a simpler `| Organization | Role | Years | URL |` table without logo metadata.
 
 Scrape and document affiliations for: $ARGUMENTS
 

@@ -207,6 +207,53 @@ When designing a voice for an AI agent:
 - [ ] [Check 3]
 ```
 
+## Mode: Movement Leader Voice Fingerprint (substrate-conformant)
+
+When the voice is for a **movement leader** whose research lives at `docs/movement_leader_research/{slug}/`, produce the voice fingerprint in the schema consumed by the [`movement-leader-substrate`](../movement-leader-substrate/SKILL.md) document. This is **not** a free-form profile — it is a fixed-shape artifact with four required components:
+
+### 1. Weighted markers (must sum to 100%)
+
+```
+| Marker | Target | Weight |
+|--------|--------|--------|
+| {Marker 1} | ≥ 0.7 | 30% |
+| {Marker 2} | 0.5–0.8 | 25% |
+| {Marker 3} | ≥ 0.5 | 20% |
+| {Marker 4} | ≥ 0.5 (2–5 metaphors / 100 words) | 15% |
+| {Marker 5} | ≥ 0.4 | 10% |
+| **Coherence target** | ≥ 0.75 | — |
+```
+
+Exactly five markers. Weights must sum to 100. Each marker is a measurable trait (e.g. "Christocentric anchoring", "prophetic intensity", "pastoral warmth", "narrative imagery", "theological depth") — not a vibe.
+
+### 2. Hallmark lexicon (9+ terms)
+
+A flat, comma-separated list of the leader's signature terminology — words that, in combination, identify the writing. Pull from `profile/voice-analysis.md` and the corpus.
+
+### 3. Antithesis prohibition (non-negotiable)
+
+One paragraph naming the **specific anti-pattern this leader avoids**. This is load-bearing — it usually shows up as the leader's most-corrected reader misreading. Examples: Alan Hirsch avoids contrastive negation→affirmation ("not X but Y"). If you cannot find one in the corpus, search until you can; if truly absent, write `No documented antithesis prohibition.`
+
+### 4. Representative quotes (5+)
+
+Direct, verifiable quotes from the corpus, each with attribution to source work:
+
+```
+> "{exact quote}" — *{work}*, {context}
+```
+
+Never reconstruct or paraphrase a quote inside quotation marks. If a paraphrase is the only available form, label it `(paraphrased)`.
+
+### Where this goes
+
+This voice fingerprint is written into Section 7 of `{SLUG}_RESEARCH_COLLATED.md`. Do not write a separate `voice-profile.md` file — the substrate is the single output.
+
+### Reference implementation
+
+See `docs/movement_leader_research/alan-hirsch/ALAN_HIRSCH_RESEARCH_COLLATED.md` Section 7 (Voice fingerprint).
+
+---
+
 ## Mode: Audit
 
 When auditing voice consistency:

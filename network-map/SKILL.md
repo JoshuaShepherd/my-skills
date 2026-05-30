@@ -1,9 +1,11 @@
 ---
 name: network-map
-description: Map relationships, co-authorships, endorsements, and organizational connections between movement leaders with existing research. Reads network/ and profile/ data from docs/movement_leader_research/ folders to build connection graphs, identify clusters, and find bridge figures.
+description: Map relationships, co-authorships, endorsements, and organizational connections across movement leaders. Reads existing per-leader research in docs/movement_leader_research/ and writes a cross-leader graph. Output table schemas align with the `movement-leader-substrate` Network graph section so per-leader substrate files can be regenerated from this data.
 user-invocable: true
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, WebSearch, WebFetch, Agent
 ---
+
+> **Relationship to substrate.** Per-leader edges (co-authors, endorsements, organizational affiliations) live inside each leader's `{SLUG}_RESEARCH_COLLATED.md` Section 10 (Network graph). This skill produces the **cross-leader** view — clusters, bridges, isolates — by reading all substrates together. The per-leader edge tables in this skill's output MUST match the substrate's column schema so they can be lifted into a substrate refresh.
 
 # Network Map: Trace the Movement Leader Graph
 
@@ -158,10 +160,25 @@ Structure:
 - [Recommendations for strengthening the network]
 ```
 
-### Per-Leader Network Summary
+### Per-Leader Network Summary (substrate-conformant)
 
 For each leader with a research folder, also write/update:
 `docs/movement_leader_research/{slug}/network/network-summary.md`
+
+**Column schemas must match the substrate's Section 10 (Network graph)** so the substrate can be regenerated without reshaping data:
+
+```
+### Co-authors
+| Person | Joint works | Edge weight | Notes |
+
+### Endorsements received (sample)
+| From | For | Year | URL / note |
+
+### Organizational affiliations
+| Organization | Role | Years | URL |
+```
+
+Edge weight 1–10. For co-authorship of N books, use `3 + (2 × N)` bounded at 10. Endorsement weight = 3.
 
 ```markdown
 # Network Summary: [Name]

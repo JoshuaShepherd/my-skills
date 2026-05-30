@@ -1,0 +1,94 @@
+{
+  "leader": "Brad Brisco",
+  "slug": "brad-brisco",
+  "generated_at": "2026-05-22",
+  "reference_images": [
+    {
+      "basename": "brisco-newsletter-hero.png",
+      "role": "primary",
+      "original_path": "/home/josh/Downloads/brisco-newsletter-hero.png",
+      "resolution": "2400x1350"
+    }
+  ],
+  "first_impression": "Warm scholarly editorial with generous whitespace, serif display headlines, and a single muted clay accent.",
+  "color": {
+    "bg": "#FBF8F2",
+    "surface": "#FFFFFF",
+    "surface_elevated": null,
+    "ink": "#1F1A14",
+    "ink_muted": "#6B6157",
+    "accent": "#9C4A2D",
+    "accent_2": null,
+    "border": "#E6DED1",
+    "temperature": "warm",
+    "saturation": "muted"
+  },
+  "typography": {
+    "display": {
+      "family": "Fraunces",
+      "fallback": "Georgia, serif",
+      "weights": [500, 700],
+      "character": "serif with high contrast and warm ink-traps"
+    },
+    "body": {
+      "family": "Inter",
+      "fallback": "system-ui, sans-serif",
+      "weights": [400, 500, 600],
+      "character": "neutral grotesque, optical sizing on"
+    },
+    "mono": null,
+    "casing": "sentence-case",
+    "tracking_headlines": "tight",
+    "tracking_body": "normal",
+    "italics_usage": "pull-quotes"
+  },
+  "layout_density": {
+    "whitespace_ratio": "balanced",
+    "gutter_width": "generous",
+    "default_columns": 2,
+    "margin_treatment": "framed"
+  },
+  "composition": {
+    "alignment": "asymmetric",
+    "grid_behavior": "strict-grid",
+    "hierarchy_mechanism": ["size", "spacing"],
+    "flow": "orthogonal"
+  },
+  "decorative_motifs": [
+    "hairline rules between sections",
+    "small uppercase eyebrow labels in muted ink",
+    "drop caps on featured article lead paragraphs"
+  ],
+  "imagery": {
+    "bleed": "framed",
+    "filter": "warm-graded",
+    "subjects": "environmental",
+    "aspect_ratios": ["16:9", "3:2", "2:3"]
+  },
+  "hero_pattern": {
+    "selected": "split",
+    "rationale": "Reference shows headline + tagline on left half with a framed environmental photo on the right at 3:2, separated by a hairline."
+  },
+  "components": {
+    "button_shape": "rectangular",
+    "button_fill": "solid",
+    "card_construction": "image-top",
+    "divider_style": "hairline",
+    "radius_scale": "2-4px",
+    "shadow_scale": "soft"
+  },
+  "motion": {
+    "energy": "moderate",
+    "notes": "Hero gets a staggered reveal on load (eyebrow → headline → tagline → CTAs). Cards have a subtle hover lift. Chips and grids are static."
+  },
+  "fonts": {
+    "display_url": "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap",
+    "body_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap",
+    "weight_budget_kb": 140,
+    "weights_loaded": ["Fraunces 500", "Fraunces 700", "Inter 400", "Inter 500", "Inter 600"]
+  },
+  "open_questions": [
+    "Reference doesn't show a footer — defaulting to the home spec's standard 3-column editorial footer.",
+    "Reference doesn't show mobile breakpoint — inferring slide-in drawer with 200ms ease per the moderate motion field."
+  ]
+}
