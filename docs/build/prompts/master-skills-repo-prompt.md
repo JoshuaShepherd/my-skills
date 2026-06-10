@@ -12,10 +12,12 @@ Use this document as a **step-by-step operator prompt** to finish turning this *
 
    | Source on disk | Destination in `my-skills` |
    |----------------|----------------------------|
-   | `<repo>/.claude/skills/<name>/` | `<name>/` |
+   | `<repo>/.claude/skills/<name>/` | `claude/<domain>/<name>/` |
    | `<repo>/.cursor/skills/<name>/` | `cursor/<name>/` |
    | `<repo>/.agents/skills/<name>/` | `agents/<name>/` |
    | `<repo>/skills/repo-specific/<portal>/<name>/` | `repo-specific/<portal>/<name>/` |
+
+   Domain assignment: [`scripts/skill-domains.json`](../../../scripts/skill-domains.json). Full reorg guide: [`skills-organization-prompt.md`](skills-organization-prompt.md).
 
 2. **Do not treat plain path-string equality as the truth.** When comparing “is this skill in the repo?”, always map through the table above. For example, a skill at `~/.cursor/skills/ssot-dashboard/` must appear as `cursor/ssot-dashboard/` in the repo, not `ssot-dashboard/`.
 
@@ -135,13 +137,14 @@ Use this document as a **step-by-step operator prompt** to finish turning this *
 1. In **`README.md`**, add a short **“For consumers”** section:
 
    - Clone the repo.
-   - Pick a bundle path (`<name>/`, `cursor/<name>/`, `agents/<name>/`, or `repo-specific/...`).
+   - Pick a bundle path (`claude/<domain>/<name>/`, `cursor/<name>/`, `agents/<name>/`, or `repo-specific/...`).
    - Install via **copy** or **symlink** into the correct dot-folder on their machine:
 
      ```bash
+     ln -s "$(pwd)/claude/content/article-author" ~/.claude/skills/article-author
      ln -s "$(pwd)/cursor/ssot-dashboard" ~/.cursor/skills/ssot-dashboard
      ln -s "$(pwd)/agents/find-skills" ~/.agents/skills/find-skills
-     ln -s "$(pwd)/article-author" ~/.claude/skills/article-author
+     scripts/install-skill.sh article-author
      ```
 
 2. Mention **`SKILLS_MANIFEST.json`** as the machine-readable index for tooling (search by key, list sources).

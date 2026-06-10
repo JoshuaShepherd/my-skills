@@ -7,11 +7,11 @@ this repo (my-skills) as the single source of truth.
 Walks the full directory tree (nested monorepos like movemental-sites/<site>/).
 
 Skill locations:
-  - <tree>/**/.claude/skills/<skill-name>/   (SKILL.md or skill.md)
+  - <tree>/**/.claude/skills/<skill-name>/   → claude/<domain>/<skill-name>/
   - <tree>/**/.cursor/skills/<skill-name>/   → cursor/<skill-name>/
   - <tree>/**/.agents/skills/<skill-name>/   → agents/<skill-name>/
   - <tree>/**/skills/repo-specific/<portal>/<skill-name>/
-  - ~/.claude/skills/<name>/  → <name>/  (or agents/<name>/ if symlink → ~/.agents/skills)
+  - ~/.claude/skills/<name>/  → claude/<domain>/<name>/ (or agents/<name>/ if symlink → ~/.agents/skills)
   - ~/.agents/skills/<name>/  → agents/<name>/
 
 Excludes: .git, node_modules, _reference, this repo (my-skills), common build dirs.
@@ -43,6 +43,7 @@ HOME_CLAUDE_SKILLS = HOME_CLAUDE_ROOT / "skills"
 HOME_AGENTS_SKILLS = HOME_AGENTS_ROOT / "skills"
 
 MARKERS = ("SKILL.md", "skill.md")
+DOMAINS_FILE = Path(__file__).resolve().parent / "skill-domains.json"
 
 SKIP_DIR_NAMES = frozenset({
     ".git",
@@ -65,11 +66,34 @@ def marker_path(skill_dir: Path) -> Path | None:
     return None
 
 
+def load_skills_domain_map() -> dict[str, str]:
+    if not DOMAINS_FILE.is_file():
+        return {}
+    data = json.loads(DOMAINS_FILE.read_text(encoding="utf-8"))
+    return data.get("skills", {})
+
+
+def claude_dest_key(skill_name: str, skills_map: dict[str, str]) -> str:
+    domain = skills_map.get(skill_name)
+    if domain:
+        return f"claude/{domain}/{skill_name}"
+    print(
+        f"Warning: no domain for {skill_name!r} in {DOMAINS_FILE.name}; "
+        f"syncing to claude/_unassigned/{skill_name}/",
+        flush=True,
+    )
+    return f"claude/_unassigned/{skill_name}"
+
+
 def walk_skipped_parts(path: Path) -> bool:
     return any(part in SKIP_DIR_NAMES for part in path.parts)
 
 
-def hits_from_standard_skills_dir(skills_dir: Path, dest_prefix: str | None) -> list[SkillHit]:
+def hits_from_standard_skills_dir(
+    skills_dir: Path,
+    dest_prefix: str | None,
+    skills_map: dict[str, str] | None = None,
+) -> list[SkillHit]:
     """skills_dir is .../.claude/skills, .../.cursor/skills, or .../.agents/skills."""
     repo_root = skills_dir.parent.parent.resolve()
     hits: list[SkillHit] = []
@@ -82,21 +106,25 @@ def hits_from_standard_skills_dir(skills_dir: Path, dest_prefix: str | None) -> 
         m = marker_path(resolved)
         if not m:
             continue
-        key = skill_dir.name if dest_prefix is None else f"{dest_prefix}/{skill_dir.name}"
+        if dest_prefix is None:
+            key = claude_dest_key(skill_dir.name, skills_map or {})
+        else:
+            key = f"{dest_prefix}/{skill_dir.name}"
         hits.append(
             SkillHit(
                 dest_key=key,
                 src_dir=resolved,
                 repo_root=repo_root,
                 marker=m.resolve(),
+                runtime_name=skill_dir.name,
             )
         )
     return hits
 
 
-def hits_from_home_claude_skills() -> list[SkillHit]:
+def hits_from_home_claude_skills(skills_map: dict[str, str]) -> list[SkillHit]:
     """
-    ~/.claude/skills/<name>/ → repo root <name>/ unless the bundle resolves
+    ~/.claude/skills/<name>/ → claude/<domain>/<name>/ unless the bundle resolves
     under ~/.agents/skills/ (e.g. symlink) → agents/<name>/.
     """
     hits: list[SkillHit] = []
@@ -123,23 +151,28 @@ def hits_from_home_claude_skills() -> list[SkillHit]:
             agents_root
             and (resolved == agents_root or agents_root in resolved.parents)
         )
-        key = f"agents/{skill_dir.name}" if under_agents else skill_dir.name
+        key = (
+            f"agents/{skill_dir.name}"
+            if under_agents
+            else claude_dest_key(skill_dir.name, skills_map)
+        )
         hits.append(
             SkillHit(
                 dest_key=key,
                 src_dir=resolved,
                 repo_root=repo_root,
                 marker=m.resolve(),
+                runtime_name=skill_dir.name,
             )
         )
     return hits
 
 
-def hits_from_home_agents_skills() -> list[SkillHit]:
+def hits_from_home_agents_skills(skills_map: dict[str, str]) -> list[SkillHit]:
     """~/.agents/skills/<name>/ → agents/<name>/"""
     if not HOME_AGENTS_SKILLS.is_dir():
         return []
-    return hits_from_standard_skills_dir(HOME_AGENTS_SKILLS, "agents")
+    return hits_from_standard_skills_dir(HOME_AGENTS_SKILLS, "agents", skills_map)
 
 
 def hits_from_repo_specific(repo_specific: Path) -> list[SkillHit]:
@@ -165,6 +198,7 @@ def hits_from_repo_specific(repo_specific: Path) -> list[SkillHit]:
                     src_dir=skill_dir.resolve(),
                     repo_root=repo_root,
                     marker=m.resolve(),
+                    runtime_name=skill_dir.name,
                 )
             )
     return hits
@@ -178,9 +212,10 @@ class SkillHit:
     src_dir: Path
     repo_root: Path
     marker: Path
+    runtime_name: str
 
 
-def discover_in_tree(tree_root: Path) -> list[SkillHit]:
+def discover_in_tree(tree_root: Path, skills_map: dict[str, str]) -> list[SkillHit]:
     hits: list[SkillHit] = []
     if not tree_root.is_dir():
         return hits
@@ -199,11 +234,11 @@ def discover_in_tree(tree_root: Path) -> list[SkillHit]:
         if p.name == "skills":
             parent = p.parent.name
             if parent == ".claude":
-                hits.extend(hits_from_standard_skills_dir(p, None))
+                hits.extend(hits_from_standard_skills_dir(p, None, skills_map))
             elif parent == ".cursor":
-                hits.extend(hits_from_standard_skills_dir(p, "cursor"))
+                hits.extend(hits_from_standard_skills_dir(p, "cursor", skills_map))
             elif parent == ".agents":
-                hits.extend(hits_from_standard_skills_dir(p, "agents"))
+                hits.extend(hits_from_standard_skills_dir(p, "agents", skills_map))
         elif p.name == "repo-specific" and p.parent.name == "skills":
             hits.extend(hits_from_repo_specific(p))
     return hits
@@ -238,17 +273,39 @@ def rsync_merge(src: Path, dst: Path) -> None:
     )
 
 
+def manifest_entry(key: str, hit: SkillHit, skills_map: dict[str, str], alts: list) -> dict:
+    runtime_name = hit.runtime_name
+    domain: str | None = None
+    if key.startswith("claude/"):
+        parts = key.split("/")
+        if len(parts) >= 3:
+            domain = parts[1]
+    entry = {
+        "runtime_name": runtime_name,
+        "dest_path": key.replace("/", "/"),
+        "canonical_repo": str(hit.repo_root),
+        "canonical_skill_dir": str(hit.src_dir),
+        "sources": alts,
+    }
+    if domain:
+        entry["domain"] = domain
+    elif runtime_name in skills_map:
+        entry["domain"] = skills_map[runtime_name]
+    return entry
+
+
 def main() -> int:
+    skills_map = load_skills_domain_map()
     all_hits: list[SkillHit] = []
 
     if MOVEMENTAL.is_dir():
-        all_hits.extend(discover_in_tree(MOVEMENTAL))
+        all_hits.extend(discover_in_tree(MOVEMENTAL, skills_map))
 
     if DEV_REPOS.is_dir():
-        all_hits.extend(discover_in_tree(DEV_REPOS))
+        all_hits.extend(discover_in_tree(DEV_REPOS, skills_map))
 
-    all_hits.extend(hits_from_home_claude_skills())
-    all_hits.extend(hits_from_home_agents_skills())
+    all_hits.extend(hits_from_home_claude_skills(skills_map))
+    all_hits.extend(hits_from_home_agents_skills(skills_map))
 
     by_key: dict[str, list[SkillHit]] = {}
     for h in all_hits:
@@ -276,11 +333,7 @@ def main() -> int:
                 }
             )
 
-        manifest_skills[key] = {
-            "canonical_repo": str(canon.repo_root),
-            "canonical_skill_dir": str(canon.src_dir),
-            "sources": alts,
-        }
+        manifest_skills[key] = manifest_entry(key, canon, skills_map, alts)
         synced += 1
 
     scan_roots = [str(MOVEMENTAL), str(DEV_REPOS)]

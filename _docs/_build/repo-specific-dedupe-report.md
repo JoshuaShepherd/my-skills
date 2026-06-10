@@ -1,0 +1,124 @@
+# repo-specific dedupe report
+
+- add-table (portals: alan-hirsch)
+- affiliation-audit (portals: alan-hirsch)
+- animation (portals: alan-hirsch)
+- app-architect (portals: adam-seiz, alan-hirsch)
+- article-audit (portals: adam-seiz, alan-hirsch)
+- article-plan (portals: adam-seiz, alan-hirsch)
+- asset-author-style (portals: alan-hirsch)
+- asset-deliver (portals: alan-hirsch)
+- asset-headshot (portals: alan-hirsch)
+- asset-hero-portrait (portals: alan-hirsch)
+- asset-video-prompt (portals: adam-seiz, alan-hirsch, movemental-content-studio)
+- audio-scrape (portals: adam-seiz, alan-hirsch)
+- chat-ui-audit (portals: alan-hirsch)
+- course-audit (portals: alan-hirsch, movemental-content-studio)
+- course-section (portals: alan-hirsch)
+- course-ux (portals: adam-seiz, alan-hirsch)
+- docs-type-safety (portals: alan-hirsch)
+- generate (portals: alan-hirsch)
+- gpt-export (portals: alan-hirsch)
+- icon-system (portals: alan-hirsch)
+- new-page (portals: alan-hirsch)
+- sentry-setup (portals: alan-hirsch)
+- studio-design (portals: alan-hirsch)
+- studio-export (portals: adam-seiz, alan-hirsch)
+- studio-prompt (portals: alan-hirsch)
+- studio-style (portals: alan-hirsch)
+- validate (portals: alan-hirsch)
+- youtube-scrape (portals: adam-seiz, alan-hirsch)
+
+## keep
+
+- affiliation-scrape @ adam-seiz
+- affiliation-scrape @ alan-hirsch
+- agent-context @ alan-hirsch
+- agent-create @ adam-seiz
+- agent-create @ alan-hirsch
+- agent-guardrail @ alan-hirsch
+- agent-handoff @ alan-hirsch
+- agent-instructions @ adam-seiz
+- agent-instructions @ alan-hirsch
+- agent-rag @ alan-hirsch
+- agent-stream @ alan-hirsch
+- agent-test @ alan-hirsch
+- agent-tool @ alan-hirsch
+- agent-trace @ alan-hirsch
+- alan-voice @ adam-seiz
+- alan-voice @ alan-hirsch
+- alan-voice @ movemental-content-studio
+- article-author @ adam-seiz
+- article-author @ alan-hirsch
+- article-corpus @ adam-seiz
+- article-corpus @ alan-hirsch
+- asset-animate @ alan-hirsch
+- asset-brand-check @ alan-hirsch
+- asset-composite @ alan-hirsch
+- asset-edit @ alan-hirsch
+- asset-exploded-view @ alan-hirsch
+- asset-generate @ adam-seiz
+- asset-generate @ alan-hirsch
+- asset-match @ alan-hirsch
+- asset-mockup @ alan-hirsch
+- asset-product-shot @ alan-hirsch
+- asset-prompt-library @ alan-hirsch
+- asset-series @ alan-hirsch
+- asset-text-overlay @ alan-hirsch
+- color-audit @ alan-hirsch
+- color-audit @ movemental-content-studio
+- course-author @ adam-seiz
+- course-author @ alan-hirsch
+- course-author @ movemental-content-studio
+- course-ingest @ adam-seiz
+- course-ingest @ alan-hirsch
+- course-scaffold @ adam-seiz
+- course-scaffold @ alan-hirsch
+- course-scaffold @ movemental-content-studio
+- course-validate @ adam-seiz
+- course-validate @ alan-hirsch
+- course-validate @ movemental-content-studio
+- design-audit @ alan-hirsch
+- design-section @ alan-hirsch
+- figma-prompt @ alan-hirsch
+- home-consult @ adam-seiz
+- home-consult @ alan-hirsch
+- icon-audit @ alan-hirsch
+- image-optimize @ alan-hirsch
+- logo-strip-author @ adam-seiz
+- logo-strip-author @ alan-hirsch
+- paratext-audit @ alan-hirsch
+- paratext-author @ alan-hirsch
+- pathway-audit @ adam-seiz
+- pathway-audit @ alan-hirsch
+- pathway-author @ adam-seiz
+- pathway-author @ alan-hirsch
+- responsive-audit @ alan-hirsch
+- responsive-audit @ movemental-content-studio
+- review-scrape @ alan-hirsch
+- stitch-react @ alan-hirsch
+- supabase-security-audit @ alan-hirsch
+- supabase-security-audit @ movemental-content-studio
+- tailwind-cleanup @ alan-hirsch
+- tailwind-cleanup @ movemental-content-studio
+- tenant-check @ alan-hirsch
+- typography-polish @ alan-hirsch
+- typography-polish @ movemental-content-studio
+- vercel-deploy-audit @ alan-hirsch
+- video-consult @ adam-seiz
+- video-consult @ movemental-content-studio
+- video-researcher @ adam-seiz
+- video-researcher @ movemental-content-studio
+
+## portal-only
+
+- pathway-article-gen (portals: alan-hirsch)
+- pathway-case-study (portals: alan-hirsch)
+- pathway-content (portals: alan-hirsch)
+- pathway-faq (portals: alan-hirsch)
+- pathway-glossary (portals: alan-hirsch)
+- pathway-overview (portals: alan-hirsch)
+- pathway-profile (portals: alan-hirsch)
+- pathway-quotes (portals: alan-hirsch)
+- pathway-scripture (portals: alan-hirsch)
+- pathway-visualization (portals: alan-hirsch)
