@@ -1,8 +1,8 @@
 # Skill catalog
 
-Generated: 2026-05-30T05:33:01.902302+00:00
+Generated: 2026-06-11T18:35:08.127241+00:00
 
-**Total canonical Claude skills:** 261
+**Total canonical Claude skills:** 263
 
 Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-skill.sh`).
 
@@ -86,7 +86,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `visualization-repair` | > | `claude/codegen/visualization-repair` |
 | `write-instructions` | Author or refine agent instructions — use when asked to write a system prompt, create or update agent instructions, comp | `claude/codegen/write-instructions` |
 
-## content (43)
+## content (44)
 
 | Skill | Description | Path |
 |-------|-------------|------|
@@ -127,6 +127,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `pathway-audit` | Audit a pathway page against the canonical 12-section architecture. Reports what's missing, what's below spec, what's co | `claude/content/pathway-audit` |
 | `pathway-author` | Write or update content for a pathway page — any single section or a full pathway. Follows the canonical 12-section arch | `claude/content/pathway-author` |
 | `pathway-builder` | Build type-safe React pathway pages from pathway_sections database content — generates types, hooks, section components, | `claude/content/pathway-builder` |
+| `plain-prose` | Write clear, plain prose, and strip register-jargon out of text that already has it. Use this whenever writing prose tha | `claude/content/plain-prose` |
 | `prose-craft` | Core writing craft skill — sentence-level quality, rhythm, voice, show-don't-tell, sensory detail, pacing, and line-leve | `claude/content/prose-craft` |
 | `scaffold-course` | Scaffold a new 8-week transformational course — creating the database rows, ingestion script, and optional markdown cont | `claude/content/scaffold-course` |
 | `story-architect` | Narrative structure skill for fiction and creative non-fiction — plot architecture, character arcs, scene construction,  | `claude/content/story-architect` |
@@ -145,7 +146,6 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `chat-ui-audit` | Audit and fix chat-based AI UI (chatbots, agents, floating chat) against production best practices from Claude, ChatGPT, | `claude/design/chat-ui-audit` |
 | `ckmui-styling` | Create beautiful, accessible user interfaces with shadcn/ui components (built on Radix UI + Tailwind), Tailwind CSS util | `claude/design/ckmui-styling` |
 | `color-audit` | Expert color palette audit for movemental — verify semantic token completeness, WCAG contrast compliance, 60-30-10 distr | `claude/design/color-audit` |
-| `concept-modern-ui` | > | `claude/design/concept-modern-ui` |
 | `design-audit` | Audit a page or component against the Digital Curator design spec (DESIGN.md) and movemental project conventions. Use to | `claude/design/design-audit` |
 | `design-chain` | Audit and enforce the five-layer design chain (tokens → Tailwind → primitives → sections → pages) across all components  | `claude/design/design-chain` |
 | `design-chain-audit` | Unified design chain audit for Movemental — flushes drift across all 5 layers (Stitch → tokens → primitives → components | `claude/design/design-chain-audit` |
@@ -158,6 +158,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `html-to-react-tailwind` | Convert HTML/CSS/JS files into production-ready React components with Tailwind CSS. Handles CSS-to-utility mapping, JS-t | `claude/design/html-to-react-tailwind` |
 | `icon-audit` | Audit and fix icon usage for movemental — mixed libraries, wrong sizes, hardcoded colors, missing accessibility, and ill | `claude/design/icon-audit` |
 | `icon-system` | Establish or validate the canonical Icon wrapper component, size token scale, stroke weight conventions, and illustratio | `claude/design/icon-system` |
+| `movemental-ink` | > | `claude/design/movemental-ink` |
 | `new-page` | Scaffold a new public page following project conventions. Use when adding a new route under (public). | `claude/design/new-page` |
 | `oatmeal-editorial-ui` | > | `claude/design/oatmeal-editorial-ui` |
 | `page-audit` | Holistic audit of any movemental.com page — UI, content, architecture, UX, and conversion — writes a markdown report and | `claude/design/page-audit` |
@@ -167,6 +168,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `scholarly-authority-ui` | > | `claude/design/scholarly-authority-ui` |
 | `scholarly-editorial-ui` | > | `claude/design/scholarly-editorial-ui` |
 | `tailwind-cleanup` | Scan and fix Tailwind anti-patterns for movemental — hardcoded colors, arbitrary values, raw HTML bypassing shadcn/primi | `claude/design/tailwind-cleanup` |
+| `tailwind-cleanup-general` | Design-agnostic Tailwind best-practice cleanup that conforms to the current repo's design schema; documents the schema (charter→tokens→primitives→components→layouts) first if undocumented, then fixes. Symlinked into all repos. | `claude/design/tailwind-cleanup-general` |
 | `tailwind-design-system` | Build scalable design systems with Tailwind CSS v4, design tokens, component libraries, and responsive patterns. Use whe | `claude/design/tailwind-design-system` |
 | `typeset` | Improve typography by fixing font choices, hierarchy, sizing, weight consistency, and readability. Makes text feel inten | `claude/design/typeset` |
 | `typography-polish` | Audit and fix typography across movemental — heading hierarchy, Inter font compliance, display tracking, eyebrow convent | `claude/design/typography-polish` |
@@ -250,7 +252,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `grok-api` | Build, refine, and master agents using the xAI Grok API — OpenAI-compatible endpoint with grok-4.20 and grok-4-1-fast mo | `claude/integrations/grok-api` |
 | `openai-api` | Build, refine, and master agents using the OpenAI API — Chat Completions, Responses API, and OpenAI Agents SDK. Covers f | `claude/integrations/openai-api` |
 
-## movemental (32)
+## movemental (33)
 
 | Skill | Description | Path |
 |-------|-------------|------|
@@ -266,6 +268,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `movemental-narrative-audit` | > | `claude/movemental/movemental-narrative-audit` |
 | `movemental-page-auditor` | Audit any Movemental page (HTML mockup or production React) across six passes — narrative sequencing, copy & language, t | `claude/movemental/movemental-page-auditor` |
 | `movemental-prose` | Audit and fix line-level prose in Movemental articles, book chapters, field guides, paratext, emails, and site copy. Cat | `claude/movemental/movemental-prose` |
+| `movemental-publish-gate` | Pre-publication quality gate for research and authoritative content headed to movemental.ai. Run before posting any arti | `claude/movemental/movemental-publish-gate` |
 | `movemental-tenant-provision` | Provision Movemental movement-leader tenants end-to-end on Supabase — runs Phase 0 prerequisite security/auth gates firs | `claude/movemental/movemental-tenant-provision` |
 | `movemental-welcome-letter` | Draft the Movemental dashboard welcome letter for a specific movement leader from their fragmentation-story dossier. Use | `claude/movemental/movemental-welcome-letter` |
 | `movemental-welcome-letter-publish` | Publish a finished Movemental dashboard welcome letter to the production Supabase database so the named movement leader  | `claude/movemental/movemental-welcome-letter-publish` |
