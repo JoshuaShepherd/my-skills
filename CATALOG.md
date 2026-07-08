@@ -1,8 +1,8 @@
 # Skill catalog
 
-Generated: 2026-06-11T18:35:08.127241+00:00
+Generated: 2026-07-08T06:47:56.047602+00:00
 
-**Total canonical Claude skills:** 263
+**Total canonical Claude skills:** 289
 
 Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-skill.sh`).
 
@@ -31,7 +31,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `openai-vector-store` | > | `claude/agents/openai-vector-store` |
 | `setup-streaming` | Set up or debug agent streaming — use when asked to implement SSE streaming, handle ChatKit event types, fix stream stal | `claude/agents/setup-streaming` |
 
-## assets (29)
+## assets (30)
 
 | Skill | Description | Path |
 |-------|-------------|------|
@@ -57,6 +57,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `fal-ai-media` | Unified media generation via fal.ai MCP — image, video, and audio. Covers text-to-image (Nano Banana), text/image-to-vid | `claude/assets/fal-ai-media` |
 | `gpt-export` | Generate 21 markdown knowledge files + custom instructions for creating a Custom GPT strategic consultant from the curre | `claude/assets/gpt-export` |
 | `image-optimize` | Optimize images from the local images repo (convert to WebP, generate responsive variants, resize) and upload to Supabas | `claude/assets/image-optimize` |
+| `movemental-pdf` | Produce branded Movemental PDFs (the Movemental, LLC visual identity used at movemental.ai — wordmark logo, Inter typogr | `claude/assets/movemental-pdf` |
 | `nano-banana-pro` | Generate or edit images via Gemini 3 Pro Image (Nano Banana Pro). Use when the user asks to create an image, generate a  | `claude/assets/nano-banana-pro` |
 | `pdf-ebook` | Convert any file format (markdown, text, HTML) into a professionally styled PDF e-book using WeasyPrint. Supports single | `claude/assets/pdf-ebook` |
 | `remotion` | Programmatic video creation with React via Remotion — compositions, animations, motion graphics, rendered to MP4. Includ | `claude/assets/remotion` |
@@ -86,7 +87,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `visualization-repair` | > | `claude/codegen/visualization-repair` |
 | `write-instructions` | Author or refine agent instructions — use when asked to write a system prompt, create or update agent instructions, comp | `claude/codegen/write-instructions` |
 
-## content (44)
+## content (45)
 
 | Skill | Description | Path |
 |-------|-------------|------|
@@ -127,6 +128,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `pathway-audit` | Audit a pathway page against the canonical 12-section architecture. Reports what's missing, what's below spec, what's co | `claude/content/pathway-audit` |
 | `pathway-author` | Write or update content for a pathway page — any single section or a full pathway. Follows the canonical 12-section arch | `claude/content/pathway-author` |
 | `pathway-builder` | Build type-safe React pathway pages from pathway_sections database content — generates types, hooks, section components, | `claude/content/pathway-builder` |
+| `pathway-content-author` | >- | `claude/content/pathway-content-author` |
 | `plain-prose` | Write clear, plain prose, and strip register-jargon out of text that already has it. Use this whenever writing prose tha | `claude/content/plain-prose` |
 | `prose-craft` | Core writing craft skill — sentence-level quality, rhythm, voice, show-don't-tell, sensory detail, pacing, and line-leve | `claude/content/prose-craft` |
 | `scaffold-course` | Scaffold a new 8-week transformational course — creating the database rows, ingestion script, and optional markdown cont | `claude/content/scaffold-course` |
@@ -135,7 +137,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `week-author` | Draft a complete course week — all transformation loop sections in Alan Hirsch's voice, grounded in corpus, following th | `claude/content/week-author` |
 | `writing-agent-builder` | Architect AI agents that write well — system prompt design, voice integration, tool selection, RAG for source material,  | `claude/content/writing-agent-builder` |
 
-## design (37)
+## design (41)
 
 | Skill | Description | Path |
 |-------|-------------|------|
@@ -168,7 +170,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `scholarly-authority-ui` | > | `claude/design/scholarly-authority-ui` |
 | `scholarly-editorial-ui` | > | `claude/design/scholarly-editorial-ui` |
 | `tailwind-cleanup` | Scan and fix Tailwind anti-patterns for movemental — hardcoded colors, arbitrary values, raw HTML bypassing shadcn/primi | `claude/design/tailwind-cleanup` |
-| `tailwind-cleanup-general` | Design-agnostic Tailwind best-practice cleanup that conforms to the current repo's design schema; documents the schema (charter→tokens→primitives→components→layouts) first if undocumented, then fixes. Symlinked into all repos. | `claude/design/tailwind-cleanup-general` |
+| `tailwind-cleanup-general` | Design-agnostic Tailwind best-practice cleanup that conforms to the CURRENT repo's design schema. If the schema is alrea | `claude/design/tailwind-cleanup-general` |
 | `tailwind-design-system` | Build scalable design systems with Tailwind CSS v4, design tokens, component libraries, and responsive patterns. Use whe | `claude/design/tailwind-design-system` |
 | `typeset` | Improve typography by fixing font choices, hierarchy, sizing, weight consistency, and readability. Makes text feel inten | `claude/design/typeset` |
 | `typography-polish` | Audit and fix typography across movemental — heading hierarchy, Inter font compliance, display tracking, eyebrow convent | `claude/design/typography-polish` |
@@ -177,6 +179,9 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `visual-storytelling-audit` | Cross-platform audit of visual storytelling components — cards, grids, stats, comparisons, numbered steps, section rhyth | `claude/design/visual-storytelling-audit` |
 | `web-component-design` | Master React, Vue, and Svelte component patterns including CSS-in-JS, composition strategies, and reusable component arc | `claude/design/web-component-design` |
 | `web-design-guidelines` | Review UI code for Web Interface Guidelines compliance. Use when asked to "review my UI", "check accessibility", "audit  | `claude/design/web-design-guidelines` |
+| `zenwrite-design` | Design and build new UI for ZenWrite — the light-primary, distraction-free scholarly-writing app — the best possible way | `claude/design/zenwrite-design` |
+| `zenwrite-design-chain` | Build new UI or audit/align existing UI for the ZenWrite scholarly-writing app — its light-primary, dual-sphere design s | `claude/design/zenwrite-design-chain` |
+| `zenwrite-ui-audit` | Audit and improve existing ZenWrite UI — React 19 + Tailwind v4 quality plus the ZenWrite design chain (light-primary, d | `claude/design/zenwrite-ui-audit` |
 
 ## docs (3)
 
@@ -239,7 +244,7 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `workspace-strategy` | Strategic planning for the workspace doc system — content roadmaps, agentic workflow design, context coding architecture | `claude/infrastructure/workspace-strategy` |
 | `write-tests` | Write agent tests — use when asked to add unit tests, smoke tests, or E2E tests for agents, including tool tests, instru | `claude/infrastructure/write-tests` |
 
-## integrations (8)
+## integrations (9)
 
 | Skill | Description | Path |
 |-------|-------------|------|
@@ -251,25 +256,37 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `github` | Interact with GitHub using the `gh` CLI — PRs, issues, CI runs, code review, and API queries. Use when checking PR statu | `claude/integrations/github` |
 | `grok-api` | Build, refine, and master agents using the xAI Grok API — OpenAI-compatible endpoint with grok-4.20 and grok-4-1-fast mo | `claude/integrations/grok-api` |
 | `openai-api` | Build, refine, and master agents using the OpenAI API — Chat Completions, Responses API, and OpenAI Agents SDK. Covers f | `claude/integrations/openai-api` |
+| `trigger-dev` | >- | `claude/integrations/trigger-dev` |
 
-## movemental (33)
+## movemental (51)
 
 | Skill | Description | Path |
 |-------|-------------|------|
 | `affiliation-audit` | Audit collected affiliation data against logo strip and social proof best practices. Evaluates logo quality, grouping st | `claude/movemental/affiliation-audit` |
 | `affiliation-scrape` | Research organizations a leader is affiliated with AND fetch logos for them. Output is a JSON record optimized for rende | `claude/movemental/affiliation-scrape` |
+| `dashboard-agent-audit` | Sign into the Movemental Studio dashboard via Playwright as EACH movement-leader tenant (or a chosen subset), traverse a | `claude/movemental/dashboard-agent-audit` |
 | `domain-finder` | Analyzes a project's docs and code to generate domain name candidates, check availability, compare registrar pricing, an | `claude/movemental/domain-finder` |
 | `fragmentation-story` | > | `claude/movemental/fragmentation-story` |
 | `home-consult` | Strategic consultation for a movement leader home page — mandatory sections rubric, scroll-stop strategy (Spline/NB2/GSA | `claude/movemental/home-consult` |
 | `logo-strip-author` | Author a complete social proof / logo strip section for an author or leader — copy, grouping strategy, TypeScript conten | `claude/movemental/logo-strip-author` |
 | `ml-template-from-reference` | Build an HTML/CSS/JS movement-leader template (home + content library + articles) whose visual design matches a provided | `claude/movemental/ml-template-from-reference` |
+| `movement-leader-content-harvest` | >- | `claude/movemental/movement-leader-content-harvest` |
+| `movement-leader-harvest-ingest` | >- | `claude/movemental/movement-leader-harvest-ingest` |
+| `movement-leader-harvest-manifest` | >- | `claude/movemental/movement-leader-harvest-manifest` |
+| `movement-leader-media-transcribe` | >- | `claude/movemental/movement-leader-media-transcribe` |
+| `movement-leader-platform-build` | > | `claude/movemental/movement-leader-platform-build` |
 | `movement-leader-substrate` | Author the machine-readable substrate document for a movement leader — identity resolution, relational traversal, concep | `claude/movemental/movement-leader-substrate` |
+| `movement-leader-themes` | Derive a movement leader's core themes from their own book corpus and research, then author the canonical theme docs in  | `claude/movemental/movement-leader-themes` |
+| `movement-leader-voice` | Author the canonical voice & style guide for a movement leader at `docs/voice/{SLUG}_VOICE.md` — a self-contained, corpu | `claude/movemental/movement-leader-voice` |
 | `movemental-committed-voice-bio` | Generate the Committed Voices onboarding entry for a specific movement leader from their research dossier. Use when aske | `claude/movemental/movemental-committed-voice-bio` |
+| `movemental-leader-corpus-upload` | Load a movement leader's research into Supabase movement_leader_corpus_data and the related onboarding tables (corpus_re | `claude/movemental/movemental-leader-corpus-upload` |
 | `movemental-narrative-audit` | > | `claude/movemental/movemental-narrative-audit` |
 | `movemental-page-auditor` | Audit any Movemental page (HTML mockup or production React) across six passes — narrative sequencing, copy & language, t | `claude/movemental/movemental-page-auditor` |
 | `movemental-prose` | Audit and fix line-level prose in Movemental articles, book chapters, field guides, paratext, emails, and site copy. Cat | `claude/movemental/movemental-prose` |
 | `movemental-publish-gate` | Pre-publication quality gate for research and authoritative content headed to movemental.ai. Run before posting any arti | `claude/movemental/movemental-publish-gate` |
+| `movemental-site-template-publish` | Publish a Stitch-authored HTML/Tailwind one-page site mockup into the Movemental Studio front-end-template catalog so it | `claude/movemental/movemental-site-template-publish` |
 | `movemental-tenant-provision` | Provision Movemental movement-leader tenants end-to-end on Supabase — runs Phase 0 prerequisite security/auth gates firs | `claude/movemental/movemental-tenant-provision` |
+| `movemental-voice` | The Movemental company voice — write new copy, prompt agents, or audit drafts so anything carrying the Movemental name s | `claude/movemental/movemental-voice` |
 | `movemental-welcome-letter` | Draft the Movemental dashboard welcome letter for a specific movement leader from their fragmentation-story dossier. Use | `claude/movemental/movemental-welcome-letter` |
 | `movemental-welcome-letter-publish` | Publish a finished Movemental dashboard welcome letter to the production Supabase database so the named movement leader  | `claude/movemental/movemental-welcome-letter-publish` |
 | `network-map` | Map relationships, co-authorships, endorsements, and organizational connections across movement leaders. Reads existing  | `claude/movemental/network-map` |
@@ -278,6 +295,10 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `platform-demo-architect` | Interactive 9-step process to design a cutting-edge, best-case platform demo for a specific audience — audience intel, p | `claude/movemental/platform-demo-architect` |
 | `poll-opinion-research` | Research public opinion, polling data, and sentiment trends using Pew Research, Gallup, Ipsos, Eurobarometer, YouGov, an | `claude/movemental/poll-opinion-research` |
 | `stakeholder-map` | Deep-research Youthfront stakeholders and map their full connection networks for donor cultivation | `claude/movemental/stakeholder-map` |
+| `stitch-intake-audit` | > | `claude/movemental/stitch-intake-audit` |
+| `stitch-migration-validate` | > | `claude/movemental/stitch-migration-validate` |
+| `stitch-page-port` | > | `claude/movemental/stitch-page-port` |
+| `stitch-token-bridge` | > | `claude/movemental/stitch-token-bridge` |
 | `tam-audit` | Audit the TAM master list for gaps, staleness, scoring inconsistencies, demographic imbalances, and missing research — p | `claude/movemental/tam-audit` |
 | `tam-blind-spots` | Search the structural blind spots that network mapping misses — domain practitioners, justice/reconciliation voices, wor | `claude/movemental/tam-blind-spots` |
 | `tam-discover` | Discover new movement leader candidates for the Movemental TAM using network-based and content-based search strategies | `claude/movemental/tam-discover` |
@@ -287,6 +308,9 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `tam-profile` | Score a movement leader's fit with the Movemental platform — a consulting deliverable (Fit Score 1–10, NOTs assessment,  | `claude/movemental/tam-profile` |
 | `tam-reflected-understanding` | Generate a reflected understanding document for a movement leader — a second-person mirror of their calling, audience, c | `claude/movemental/tam-reflected-understanding` |
 | `tam-score` | Score and rank movement leader candidates using the Seven Gates and 100-point Movemental rubric | `claude/movemental/tam-score` |
+| `tenant-backend-parity` | > | `claude/movemental/tenant-backend-parity` |
+| `tenant-migration-playbook` | > | `claude/movemental/tenant-migration-playbook` |
+| `tenant-structural-port` | > | `claude/movemental/tenant-structural-port` |
 | `transformative-learning-collaborator` | Expert peer collaborator for transformative learning design — thinks with you about course architecture, content alignme | `claude/movemental/transformative-learning-collaborator` |
 | `voice-designer` | Build detailed voice profiles for characters, narrators, brands, or AI agents — covering diction, syntax, rhythm, worldv | `claude/movemental/voice-designer` |
 
@@ -306,10 +330,11 @@ Install any skill flat into `~/.claude/skills/<name>/` (see `scripts/install-ski
 | `youtube-scrape` | Scrape YouTube channel videos — fetches metadata, downloads transcripts via yt-dlp, chunks for search, and pulls comment | `claude/research/youtube-scrape` |
 | `youtube-transcript` | Extract a plain-text transcript from any YouTube video URL. Returns timestamped and full-text versions of the transcript | `claude/research/youtube-transcript` |
 
-## stitch (9)
+## stitch (10)
 
 | Skill | Description | Path |
 |-------|-------------|------|
+| `integrate-stitch-template` | Fully integrate a Google Stitch screen (or set of screens) into the movement-leader-html-templates platform. Given Stitc | `claude/stitch/integrate-stitch-template` |
 | `stitch-build` | Create a Stitch project and generate screens from a feature specification or user description. Calls Stitch MCP tools di | `claude/stitch/stitch-build` |
 | `stitch-design` | Unified entry point for Stitch design work. Handles prompt enhancement (UI/UX keywords, atmosphere), design system synth | `claude/stitch/stitch-design` |
 | `stitch-download` | Browse Stitch projects, download all screens (HTML + screenshots), and generate an organized local gallery with an index | `claude/stitch/stitch-download` |

@@ -1,0 +1,29 @@
+{
+  "name": "movemental-skills",
+  "owner": {
+    "name": "Joshua Shepherd",
+    "email": "joshuajordanshepherd@gmail.com"
+  },
+  "metadata": {
+    "description": "Movemental thought-leader platform skills — tenant migration, content, and authoring",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "movemental-tenant-migration",
+      "description": "End-to-end migration of a Movemental thought-leader tenant: Google Stitch B&W wireframes → production Next.js React (L4/L5) → Supabase type-safety backend parity → tenant config alignment → validation. Install into any leader-site project; the orchestrator bootstraps the tenant-agnostic runbook, route index, and manifest/checklist templates (bundled in the tenant-migration-playbook skill) into a fresh repo, then dispatches to the six phase sub-skills. All tenant values come from TENANT_MANIFEST.md, never hardcoded.",
+      "version": "1.0.0",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./claude/movemental/tenant-migration-playbook",
+        "./claude/movemental/stitch-intake-audit",
+        "./claude/movemental/stitch-token-bridge",
+        "./claude/movemental/stitch-page-port",
+        "./claude/movemental/stitch-migration-validate",
+        "./claude/movemental/tenant-backend-parity",
+        "./claude/movemental/tenant-structural-port"
+      ]
+    }
+  ]
+}

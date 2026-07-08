@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--
+  Movemental PDF starter template.
+
+  To use:
+    1. Copy this file to your working directory and rename it (e.g., my-doc.html).
+    2. Also copy: logo.png from assets/, and the entire fonts/ directory from assets/.
+       (Or symlink them, or adjust the paths in @font-face and <img src> below.)
+    3. Edit the cover and body sections to match your document.
+    4. Render with: python3 path/to/skill/scripts/render.py my-doc.html
+    5. If you have a TOC with PG_X placeholders, follow the TOC two-pass workflow
+       in the skill's SKILL.md.
+
+  CSS architecture:
+    - Brand tokens at :root
+    - Base typography on html/body
+    - Cover styles
+    - Section opener / page section styles
+    - All component styles (checklist, bullets, stakes, framework, panel,
+      stat-trio, stat-solo, stat-trio-solo, data-header, layers-overview,
+      layer-tag/title/tagline, compare table, payments table, signatures,
+      modules, stage, citations, pattern-block, assessment-item, toc, colophon)
+
+  Do NOT add @page { margin: ... } rules. The render script controls margins.
+  Keep @page { size: Letter; } only.
+-->
+<title>Movemental Document</title>
+<style>
+  /* ============================================================
+     Fonts
+     ============================================================ */
+  @font-face { font-family: "Inter"; font-style: normal; font-weight: 100; src: url("fonts/inter-100.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-style: normal; font-weight: 200; src: url("fonts/inter-200.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-style: normal; font-weight: 300; src: url("fonts/inter-300.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-style: normal; font-weight: 400; src: url("fonts/inter-400.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-style: normal; font-weight: 500; src: url("fonts/inter-500.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-style: normal; font-weight: 600; src: url("fonts/inter-600.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-style: normal; font-weight: 700; src: url("fonts/inter-700.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-style: italic;  font-weight: 300; src: url("fonts/inter-300-italic.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-style: italic;  font-weight: 400; src: url("fonts/inter-400-italic.woff2") format("woff2"); }
+
+  /* ============================================================
+     Brand tokens
+     ============================================================ */
+  :root {
+    --ink:        #111111;
+    --ink-soft:   #2a2a2a;
+    --muted:      #6b6b6b;
+    --quiet:      #8a8a8a;
+    --rule:       #d8d8d8;
+    --rule-faint: #ececec;
+    --bg-panel:   #f6f6f4;
+    --bg-deep:    #efefec;
+    --accent:     #8a8a8a;
+  }
+
+  @page { size: Letter; }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    color: var(--ink-soft);
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
+    font-size: 10pt;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  p { margin: 0 0 0.55em 0; }
+  strong { font-weight: 600; color: var(--ink); }
+  em { font-style: italic; }
+
+  /* ============================================================
+     Cover
+     ============================================================ */
+  .cover {
+    page-break-after: always;
+    height: 11in; width: 8.5in;
+    padding: 1.0in 1.0in 0.9in 1.0in;
+    display: flex; flex-direction: column;
+    background: #fff;
+  }
+  .cover .logo { width: 2.4in; margin-bottom: 1.0in; }
+  .cover .kicker-row {
+    font-size: 8.5pt; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; margin-bottom: 0.25in;
+  }
+  .cover .kicker-row .sep { opacity: 0.5; padding: 0 0.5em; }
+  .cover h1 {
+    font-weight: 100; font-size: 64pt; line-height: 1.0;
+    letter-spacing: -0.025em; margin: 0 0 0.05in 0; color: var(--ink);
+  }
+  .cover h1 .line2 { display: block; font-weight: 200; margin-top: 0.05in; }
+  .cover .sub {
+    font-weight: 300; font-size: 15pt; line-height: 1.35;
+    color: var(--ink-soft); margin: 0.35in 0 0 0; max-width: 5.4in;
+  }
+  .cover .cover-rule { width: 1.4in; height: 1px; background: var(--ink); margin: 0.45in 0; }
+  .cover .authors {
+    font-weight: 500; font-size: 10pt; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink);
+  }
+  .cover .authors .sep { color: var(--quiet); padding: 0 0.45em; }
+  .cover .edition {
+    margin-top: auto;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding-top: 0.4in; border-top: 1px solid var(--rule);
+    font-size: 9pt; color: var(--muted);
+    letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500;
+  }
+  /* Alternate cover meta variant: four-cell grid for MOUs/proposals */
+  .cover .meta {
+    margin-top: auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.35in 0.5in;
+    padding-top: 0.4in; border-top: 1px solid var(--rule);
+  }
+  .cover .meta .label {
+    font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; margin-bottom: 0.06in;
+  }
+  .cover .meta .value { font-size: 10.5pt; color: var(--ink); line-height: 1.45; }
+  .cover .meta .value .name { font-weight: 500; }
+
+  /* ============================================================
+     Body sections
+     ============================================================ */
+  section.page { page-break-before: always; }
+  section.page:first-of-type { page-break-before: avoid; }
+
+  .kicker {
+    font-size: 8.5pt; letter-spacing: 0.26em; text-transform: uppercase;
+    font-weight: 500; color: var(--muted); margin: 0 0 0.18in 0;
+  }
+  h2.section-title {
+    font-weight: 200; font-size: 28pt; line-height: 1.1;
+    letter-spacing: -0.012em; color: var(--ink);
+    margin: 0 0 0.3in 0; max-width: 5.8in;
+  }
+  h2.section-title.small { font-size: 22pt; }
+  h3.subhead {
+    font-weight: 500; font-size: 12pt; color: var(--ink);
+    margin: 0.35in 0 0.1in 0; page-break-after: avoid;
+  }
+  h4.label {
+    font-weight: 600; font-size: 8.5pt; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink);
+    margin: 0.25in 0 0.08in 0; page-break-after: avoid;
+  }
+  .lede {
+    font-weight: 300; font-size: 12pt; line-height: 1.5;
+    color: var(--ink-soft); margin: 0 0 0.2in 0; max-width: 5.8in;
+  }
+  h2.section-title, h3.subhead, h4.label, .kicker, .layer-tag, .layer-tagline, h2.layer-title {
+    page-break-after: avoid;
+  }
+
+  /* ============================================================
+     Lists
+     ============================================================ */
+  ul.checklist { list-style: none; margin: 0.05in 0 0.2in 0; padding: 0; }
+  ul.checklist li {
+    position: relative; padding: 0.04in 0 0.04in 0.28in;
+    margin-bottom: 0.06in; line-height: 1.55; page-break-inside: avoid;
+  }
+  ul.checklist li::before {
+    content: ""; position: absolute; left: 0; top: 0.13in;
+    width: 7pt; height: 7pt; border: 1px solid var(--ink); background: transparent;
+  }
+  ul.bullets { list-style: none; margin: 0.05in 0 0.2in 0; padding: 0; }
+  ul.bullets li {
+    position: relative; padding: 0.02in 0 0.02in 0.22in;
+    margin-bottom: 0.04in; line-height: 1.55;
+  }
+  ul.bullets li::before {
+    content: ""; position: absolute; left: 0; top: 0.135in;
+    width: 4pt; height: 4pt; border-radius: 50%; background: var(--accent);
+  }
+
+  /* ============================================================
+     Brand panels, stakes, framework, total card
+     ============================================================ */
+  .panel {
+    padding: 0.2in 0.25in;
+    background: var(--bg-panel); border-left: 2px solid var(--ink);
+    page-break-inside: avoid;
+  }
+  .panel-label {
+    font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; margin-bottom: 0.08in;
+  }
+  .panel-body { font-size: 10pt; line-height: 1.5; }
+  .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45in; }
+
+  .stakes {
+    margin: 0.18in 0 0.05in 0; padding: 0.14in 0.22in;
+    background: var(--bg-panel); border-left: 2px solid var(--ink);
+    font-size: 9.5pt; color: var(--ink-soft); page-break-inside: avoid;
+  }
+  .stakes .stakes-label, .stakes-label {
+    display: inline; font-weight: 600; color: var(--ink); letter-spacing: 0.04em;
+  }
+
+  .framework {
+    margin: 0.18in 0; padding: 0.22in 0.28in;
+    background: var(--bg-panel); border-left: 2px solid var(--ink);
+    font-size: 10pt; line-height: 1.6; color: var(--ink-soft);
+  }
+  .framework p { margin-bottom: 0.55em; }
+  .framework p:last-child { margin-bottom: 0; }
+
+  .total-card {
+    margin: 0.1in 0 0.2in 0; padding: 0.22in 0.28in;
+    border: 1px solid var(--rule); border-left: 3px solid var(--ink);
+    background: var(--bg-panel); display: grid; gap: 0.1in;
+    page-break-inside: avoid;
+  }
+  .total-card .label {
+    font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+  }
+  .total-card .amount { font-size: 22pt; font-weight: 200; letter-spacing: -0.01em; }
+  .total-card .note { font-size: 9.5pt; color: var(--ink-soft); }
+
+  /* ============================================================
+     Statistics
+     ============================================================ */
+  .stat-trio {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.18in;
+    margin: 0.18in 0 0.25in 0;
+  }
+  .stat-card {
+    padding: 0.18in; background: var(--bg-panel);
+    border-top: 2px solid var(--ink); page-break-inside: avoid;
+  }
+  .stat-card .cohort {
+    font-size: 7.5pt; letter-spacing: 0.22em; text-transform: uppercase;
+    font-weight: 600; color: var(--ink); margin-bottom: 0.14in;
+  }
+  .stat-row { display: flex; flex-direction: column; gap: 0.12in; }
+  .stat-pair { display: flex; align-items: baseline; gap: 0.1in; }
+  .stat-pair .big {
+    font-weight: 200; font-size: 28pt; line-height: 1;
+    color: var(--ink); min-width: 1in; letter-spacing: -0.02em;
+  }
+  .stat-pair .big.muted-num { color: var(--quiet); }
+  .stat-pair .desc { font-size: 9pt; color: var(--ink-soft); line-height: 1.35; flex: 1; }
+  .stat-source {
+    margin-top: 0.14in; padding-top: 0.08in;
+    border-top: 1px solid var(--rule-faint);
+    font-size: 7pt; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+  }
+
+  .stat-solo {
+    margin: 0.16in 0; padding: 0.2in 0.22in;
+    background: var(--bg-panel); border-top: 2px solid var(--ink);
+    display: grid; grid-template-columns: 1.7in 1fr; gap: 0.2in;
+    align-items: center; page-break-inside: avoid;
+  }
+  .stat-solo .big-num {
+    font-weight: 200; font-size: 48pt; line-height: 1;
+    color: var(--ink); letter-spacing: -0.025em;
+  }
+  .stat-solo .body { font-size: 10pt; color: var(--ink-soft); line-height: 1.45; }
+  .stat-solo .source {
+    margin-top: 0.08in;
+    font-size: 7pt; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+  }
+
+  .stat-trio-solo {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.18in;
+    margin: 0.18in 0;
+  }
+  .stat-trio-solo .stat-card { padding: 0.2in 0.18in; }
+  .stat-trio-solo .big-num {
+    font-weight: 200; font-size: 38pt; line-height: 1;
+    color: var(--ink); margin-bottom: 0.08in; letter-spacing: -0.022em;
+  }
+  .stat-trio-solo .desc {
+    font-size: 9pt; line-height: 1.4; color: var(--ink-soft); min-height: 1.2in;
+  }
+  .stat-trio-solo .source {
+    margin-top: 0.1in; padding-top: 0.07in;
+    border-top: 1px solid var(--rule-faint);
+    font-size: 7pt; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+  }
+
+  .data-header {
+    margin: 0.35in 0 0.05in 0; padding-bottom: 0.06in;
+    border-bottom: 1px solid var(--rule); page-break-after: avoid;
+  }
+  .data-header .data-h { font-size: 14pt; font-weight: 300; color: var(--ink); margin: 0; }
+  .data-header .data-sub { font-size: 9pt; color: var(--muted); margin-top: 0.04in; }
+
+  /* ============================================================
+     Layer pages
+     ============================================================ */
+  .layer-tag {
+    font-size: 8.5pt; letter-spacing: 0.26em; text-transform: uppercase;
+    font-weight: 500; color: var(--muted); margin: 0 0 0.1in 0;
+  }
+  h2.layer-title {
+    font-weight: 200; font-size: 26pt; line-height: 1.1;
+    letter-spacing: -0.012em; color: var(--ink); margin: 0 0 0.06in 0;
+  }
+  .layer-tagline {
+    font-style: italic; font-weight: 300; font-size: 11.5pt;
+    color: var(--muted); margin: 0 0 0.22in 0;
+    border-bottom: 1px solid var(--rule); padding-bottom: 0.16in;
+  }
+
+  /* ============================================================
+     Layers overview
+     ============================================================ */
+  .layers-overview { margin: 0.2in 0 0 0; }
+  .layer-row {
+    display: grid; grid-template-columns: 0.55in 1.7in 1fr;
+    align-items: baseline; padding: 0.18in 0;
+    border-bottom: 1px solid var(--rule); page-break-inside: avoid;
+  }
+  .layer-row .num {
+    font-weight: 200; font-size: 22pt; color: var(--quiet);
+    line-height: 1; letter-spacing: -0.01em;
+  }
+  .layer-row .name { font-weight: 600; font-size: 12pt; color: var(--ink); }
+  .layer-row .desc { font-size: 10.5pt; color: var(--ink-soft); line-height: 1.5; }
+
+  /* ============================================================
+     Tables
+     ============================================================ */
+  table.compare {
+    width: 100%; border-collapse: collapse;
+    margin: 0.15in 0; font-size: 9.5pt; table-layout: fixed;
+  }
+  table.compare thead th {
+    text-align: left; vertical-align: bottom;
+    padding: 10pt 12pt 12pt 12pt;
+    border-bottom: 1px solid var(--ink); font-weight: 500; page-break-after: avoid;
+  }
+  table.compare thead .name { font-size: 13pt; font-weight: 600; color: var(--ink); margin-bottom: 4pt; }
+  table.compare thead .tag {
+    font-size: 8pt; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+  }
+  table.compare tbody td {
+    padding: 10pt 12pt; vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.45; page-break-inside: avoid;
+  }
+  table.compare tbody .rowlabel {
+    font-size: 8pt; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600;
+    width: 1.3in; padding-right: 14pt;
+  }
+
+  table.payments {
+    width: 100%; border-collapse: collapse;
+    margin: 0.1in 0 0.2in 0; font-size: 10pt;
+  }
+  table.payments th, table.payments td {
+    text-align: left; padding: 9pt 12pt;
+    border-bottom: 1px solid var(--rule); vertical-align: top;
+  }
+  table.payments thead th {
+    font-weight: 500; font-size: 8.5pt; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted);
+    border-bottom: 1px solid var(--ink); padding-bottom: 8pt;
+  }
+  table.payments td.amount { font-variant-numeric: tabular-nums; }
+
+  /* ============================================================
+     Self-assessment, pattern block
+     ============================================================ */
+  .assessment-item {
+    margin: 0.18in 0; padding: 0.16in 0 0.05in 0;
+    border-top: 1px solid var(--rule); page-break-inside: avoid;
+  }
+  .assessment-item .tag {
+    font-size: 8.5pt; letter-spacing: 0.22em; text-transform: uppercase;
+    font-weight: 600; color: var(--muted); margin-bottom: 0.08in;
+  }
+  .assessment-item .q {
+    font-weight: 500; color: var(--ink);
+    font-size: 11pt; line-height: 1.45; margin: 0 0 0.08in 0;
+  }
+  .assessment-item .interp {
+    font-size: 9.5pt; color: var(--ink-soft); line-height: 1.5;
+  }
+
+  .pattern-block {
+    margin: 0.2in 0 0 0; padding: 0.16in 0.22in;
+    background: var(--bg-panel); border-left: 2px solid var(--ink);
+    page-break-inside: avoid;
+  }
+  .pattern-block .label { font-weight: 600; color: var(--ink); margin-right: 0.5em; }
+  .pattern-block p { margin-bottom: 0.45em; }
+  .pattern-block p:last-child { margin-bottom: 0; }
+
+  /* ============================================================
+     TOC
+     ============================================================ */
+  .toc { margin: 0.05in 0; }
+  .toc-entry {
+    display: flex; align-items: baseline;
+    padding: 0.085in 0;
+    border-bottom: 1px dotted var(--rule);
+    font-size: 10pt;
+  }
+  .toc-entry.major { font-weight: 500; color: var(--ink); }
+  .toc-entry.sub {
+    padding-left: 0.32in;
+    color: var(--ink-soft); font-size: 9.5pt;
+  }
+  .toc-num {
+    width: 0.4in; font-variant-numeric: tabular-nums;
+    color: var(--quiet); font-weight: 500;
+    font-size: 8.5pt; letter-spacing: 0.1em;
+  }
+  .toc-label { flex: 1; }
+  .toc-page {
+    font-variant-numeric: tabular-nums;
+    color: var(--muted); font-weight: 500;
+  }
+
+  /* ============================================================
+     Modules, stages, signatures, citations
+     ============================================================ */
+  .modules { margin: 0.1in 0 0 0; }
+  .module {
+    display: grid; grid-template-columns: 0.5in 1fr; gap: 0.15in;
+    padding: 0.12in 0;
+    border-bottom: 1px solid var(--rule-faint);
+    page-break-inside: avoid;
+  }
+  .module:last-child { border-bottom: none; }
+  .module .id {
+    font-weight: 600; font-size: 14pt;
+    color: var(--accent); line-height: 1;
+    padding-top: 2pt; font-variant-numeric: tabular-nums;
+  }
+  .module .title { font-weight: 600; color: var(--ink); margin-bottom: 0.04in; }
+  .module .meta-line {
+    font-size: 8.5pt; color: var(--muted);
+    letter-spacing: 0.04em; margin-bottom: 0.05in;
+  }
+  .module .desc { font-size: 10pt; line-height: 1.5; }
+
+  .stage {
+    display: grid; grid-template-columns: 1in 1fr; gap: 0.2in;
+    padding: 0.18in 0;
+    border-bottom: 1px solid var(--rule); page-break-inside: avoid;
+  }
+  .stage-name {
+    font-weight: 600; font-size: 12pt; color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .stage-desc { color: var(--ink-soft); font-size: 10pt; line-height: 1.55; }
+
+  .signatures {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.4in;
+    margin-top: 0.25in; page-break-inside: avoid;
+  }
+  .sig { border-top: 1px solid var(--ink); padding-top: 0.2in; }
+  .sig .label-strong { font-weight: 600; font-size: 11pt; margin-bottom: 0.25in; }
+  .sig .line { border-bottom: 1px solid var(--ink-soft); height: 0.32in; margin-bottom: 0.04in; }
+  .sig .field {
+    font-size: 8.5pt; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; margin-bottom: 0.18in;
+  }
+
+  ol.citations { list-style: none; counter-reset: cite; padding: 0; margin: 0; }
+  ol.citations li {
+    counter-increment: cite;
+    position: relative; padding: 0.1in 0 0.1in 0.42in;
+    border-bottom: 1px solid var(--rule-faint);
+    font-size: 9pt; line-height: 1.45; page-break-inside: avoid;
+  }
+  ol.citations li::before {
+    content: "[" counter(cite) "]";
+    position: absolute; left: 0; top: 0.12in;
+    font-weight: 600; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ============================================================
+     Colophon
+     ============================================================ */
+  .colophon { text-align: center; padding-top: 1.5in; }
+  .colophon .logo-c { width: 1.8in; margin: 0 auto 0.5in auto; display: block; }
+  .colophon .title-c { font-weight: 300; font-size: 18pt; color: var(--ink); margin-bottom: 0.06in; }
+  .colophon .sub-c { font-weight: 300; font-size: 11pt; color: var(--ink-soft); margin-bottom: 0.5in; }
+  .colophon .meta-c {
+    font-size: 9pt; color: var(--muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 500; margin-bottom: 0.06in;
+  }
+  .colophon .authors-c {
+    font-size: 10pt; color: var(--ink); font-weight: 500;
+    letter-spacing: 0.1em; margin: 0.05in 0 0.5in 0;
+  }
+  .colophon .rights {
+    font-size: 8.5pt; color: var(--muted);
+    max-width: 4.5in; margin: 0 auto; line-height: 1.55;
+  }
+  .colophon .url {
+    margin-top: 0.4in; font-size: 10pt; color: var(--ink);
+    font-weight: 500; letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     COVER — edit title, subtitle, and meta as needed
+     ============================================================ -->
+<section class="cover">
+  <img class="logo" src="logo.png" alt="Movemental">
+
+  <div class="kicker-row">
+    Document Type <span class="sep">·</span> Edition or Volume
+  </div>
+
+  <h1>Document Title<span class="line2">In Two Lines.</span></h1>
+
+  <p class="sub">A short subtitle that explains what the document is for and who it serves.</p>
+
+  <div class="cover-rule"></div>
+
+  <!-- Choose one: .authors line OR .meta grid -->
+  <div class="authors">
+    Author One <span class="sep">·</span> Author Two <span class="sep">·</span> Author Three
+  </div>
+
+  <div class="edition">
+    <div>Edition X.Y <span style="opacity:0.5;">·</span> Movemental <span style="opacity:0.5;">·</span> 2026</div>
+    <div>movemental.ai</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EXAMPLE BODY SECTION — replace this with your content.
+     Add more <section class="page">…</section> blocks for each
+     additional page-breaking section.
+     ============================================================ -->
+<section class="page">
+  <div class="kicker">Section Kicker</div>
+  <h2 class="section-title">Section title in light type.</h2>
+
+  <p class="lede">Optional lede paragraph in lighter weight, slightly larger than body, that frames the section.</p>
+
+  <p>Body prose begins here. Inter Regular at 10pt, line-height 1.6, color var(--ink-soft). Generous whitespace, hairlines under headings, occasional emphasis via <strong>weight</strong> rather than color. Em dashes are encouraged where the sentence calls for one — they suit the brand voice.</p>
+
+  <h3 class="subhead">A subsection heading.</h3>
+
+  <p>More prose. See the components reference in <code>references/components.md</code> for the full library of building blocks: checklists, brand panels, stat cards, comparison tables, layer pages, framework callouts, citations, and the colophon.</p>
+
+  <h4 class="label">A tracked-caps label.</h4>
+  <p>Used for short labeled subdivisions, especially in process-and-roles style sections.</p>
+</section>
+
+</body>
+</html>

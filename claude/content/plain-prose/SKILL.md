@@ -1,6 +1,8 @@
 ---
 name: plain-prose
 description: Write clear, plain prose, and strip register-jargon out of text that already has it. Use this whenever writing prose that should sound like a person talking (essays, web copy, emails, docs, explanations, scripts) AND whenever cleaning up text that reads like a whitepaper, a consulting deck, or systems-engineering English. Trigger it when the user asks to make writing "clearer," "plainer," "simpler," "cleaner," "less corporate," "less jargony," or "less abstract"; when they say text sounds like it is "performing intelligence," showing off, or hiding behind big words; when they flag register-marker words like "substrate," "load-bearing," "artifact," "leverage," "scaffold," "surface," "primitive," "robust," or "unpack"; and proactively whenever about to produce prose where being understood matters more than sounding sophisticated. Do not wait for the word "jargon" — abstract, consultant-flavored writing is itself the cue.
+user-invocable: true
+allowed-tools: Read, Edit, Write
 ---
 
 # Plain Prose

@@ -1,0 +1,86 @@
+<!--
+  Reference skeleton for docs/html/templates/<slug>/index.html
+  - Standalone: Tailwind CDN + Google Fonts, NO imports from src/.
+  - Single scrolling one-page public site (hero, bio/teaching, featured, footer CTA).
+  - The hero portrait element MUST carry `data-mve-hero-slot` so TPL-05's
+    TemplateHeroComposite can overlay the leader headshot. Keep it 4:5, object-cover.
+  - Use the project's typefaces: Newsreader (headings), Inter (body), Manrope (display).
+  - When ingesting a Stitch export, keep its design but ensure the hero slot + fonts exist
+    and strip any external tracking scripts.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>&lt;Title&gt; — template reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700&family=Newsreader:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: '#faf8f5',
+            foreground: '#1a1f2e',
+            primary: '#6b4c9a',
+            card: '#ffffff',
+            border: '#e8e4dc',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Manrope', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    [data-mve-hero-slot] { aspect-ratio: 4 / 5; object-fit: cover; }
+  </style>
+</head>
+<body class="bg-background text-foreground font-sans antialiased">
+  <header class="border-b border-border bg-card/80 backdrop-blur sticky top-0 z-10">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <span class="font-display font-semibold tracking-tight">Leader Name</span>
+      <nav class="hidden sm:flex gap-6 text-sm text-foreground/70">
+        <a href="#about">About</a><a href="#teaching">Teaching</a><a href="#books">Books</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="max-w-5xl mx-auto px-6 py-16 grid gap-10 md:grid-cols-[1.4fr_1fr] items-center">
+    <div>
+      <h1 class="font-serif text-4xl md:text-5xl leading-tight">A clear, human headline for the leader's public site.</h1>
+      <p class="mt-5 text-lg text-foreground/70 max-w-prose">One or two sentences of warm, plain positioning copy.</p>
+      <a href="#" class="inline-block mt-7 rounded-lg bg-primary px-6 py-3 text-white font-medium">Explore the work</a>
+    </div>
+    <!-- Hero portrait slot — headshot composite targets this element -->
+    <img
+      data-mve-hero-slot
+      class="w-full rounded-xl border border-border"
+      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=640&q=80&auto=format&fit=crop"
+      alt="Leader portrait placeholder"
+    />
+  </section>
+
+  <section id="teaching" class="max-w-5xl mx-auto px-6 py-12 border-t border-border">
+    <h2 class="font-serif text-2xl">Featured teaching</h2>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <article class="rounded-xl border border-border bg-card p-5"><h3 class="font-display font-semibold">Title</h3><p class="mt-2 text-sm text-foreground/70">Short description.</p></article>
+      <article class="rounded-xl border border-border bg-card p-5"><h3 class="font-display font-semibold">Title</h3><p class="mt-2 text-sm text-foreground/70">Short description.</p></article>
+      <article class="rounded-xl border border-border bg-card p-5"><h3 class="font-display font-semibold">Title</h3><p class="mt-2 text-sm text-foreground/70">Short description.</p></article>
+    </div>
+  </section>
+
+  <footer class="mt-12 border-t border-border bg-card">
+    <div class="max-w-5xl mx-auto px-6 py-12 text-center">
+      <h2 class="font-serif text-3xl">Start the journey</h2>
+      <a href="#" class="inline-block mt-6 rounded-lg bg-primary px-8 py-3 text-white font-medium">Begin</a>
+    </div>
+  </footer>
+</body>
+</html>

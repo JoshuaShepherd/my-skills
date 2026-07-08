@@ -1,0 +1,39 @@
+-- Append this tuple to supabase/seed-front-end-templates.sql, BEFORE the
+-- `on conflict (slug) do update set` line. Put a comma after the previous
+-- tuple's closing `)` and DO NOT put a comma after this one (it's the last
+-- before `on conflict`). Column order must match the insert (...) list:
+--   slug, title, subtitle, description, status, sort_order, tags,
+--   design_tokens, preview_manifest, hero_config,
+--   default_recommendation_weight, published_at
+--
+-- Replace every <PLACEHOLDER>. Use the real Storage URLs printed by
+-- scripts/publish-stitch-template-assets.ts. All design_tokens values are strings.
+
+  (
+    '<SLUG>',
+    '<TITLE>',
+    '<SUBTITLE>',
+    '<DESCRIPTION — representative public-site style, not the dashboard>',
+    'published',
+    <SORT_ORDER>,                              -- e.g. 40 (after existing 10/20/30)
+    '["<TAG1>", "<TAG2>"]'::jsonb,             -- from: scholarly|warm-paper|editorial|minimal|course-forward
+    '{"--background": "<HEX>", "--foreground": "<HEX>", "--primary": "<HEX>", "--card": "<HEX>", "--border": "<HEX>", "--font-serif": "<FONT>", "--font-sans": "<FONT>"}'::jsonb,
+    jsonb_build_array(
+      jsonb_build_object(
+        'key', 'home-desktop',
+        'label', 'Home',
+        'device', 'desktop',
+        'image_url', '<DESKTOP_PNG_PUBLIC_URL>',
+        'html_url', '<DESKTOP_HTML_PUBLIC_URL>'
+      ),
+      jsonb_build_object(
+        'key', 'home-mobile',
+        'label', 'Home (mobile)',
+        'device', 'mobile',
+        'image_url', '<MOBILE_PNG_PUBLIC_URL>'
+      )
+    ),
+    '{"screen_key": "home-desktop", "aspect_ratio": "4/5", "slot_strategy": "overlay"}'::jsonb,
+    <RECOMMENDATION_WEIGHT>,                   -- e.g. 60; higher = sorts first as "Recommended"
+    now()
+  )
