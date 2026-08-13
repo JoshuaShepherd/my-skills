@@ -1,10 +1,10 @@
-# Convert pipeline integration — citation preservation
+# Convert pipeline integration â€” citation preservation
 
 The `book-convert` / Phase 01 path is **not in this repo** (sources + repair scripts only). Wire these hooks into the converter that writes `book_chapters.content` and `chapter_notes`.
 
 ## Required behavior on ingest
 
-1. Extract footnotes/endnotes from the **source PDF/EPUB** with `scripts/citations/pdf_extract.py` or `epub_extract.py` (deterministic — never LLM).
+1. Extract footnotes/endnotes from the **source PDF/EPUB** with `scripts/citations/pdf_extract.py` or `epub_extract.py` (deterministic â€” never LLM).
 2. Emit inline markers in chapter HTML:
    ```html
    <sup class="noteref" data-note="N">N</sup>
@@ -26,7 +26,7 @@ post_convert_assert(chapter_html)  # raises if bodies without markers
 
 ## Assertion rule
 
-**FAIL** when a chapter has loose note-body paragraphs (`<p><sup>N.</sup> …</p>`) or extracted note bodies, but **zero** `<sup class="noteref">` markers.
+**FAIL** when a chapter has loose note-body paragraphs (`<p><sup>N.</sup> â€¦</p>`) or extracted note bodies, but **zero** `<sup class="noteref">` markers.
 
 That is exactly how the Hirsch English corpus was mangled.
 
