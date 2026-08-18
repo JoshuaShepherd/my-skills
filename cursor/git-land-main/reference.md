@@ -129,10 +129,42 @@ git remote prune origin
 - `gh pr merge --admin`
 - `git commit --no-verify` unless the user asked
 
+## Hosted CI vs local gate
+
+Read this from Phase 7 when GitHub checks are red, missing, or the user does
+not pay for Actions.
+
+**Hosted CI ran** = jobs have steps and logs from install / typecheck / test /
+lint / e2e. Green → merge. Real failure → fix or stop.
+
+**Hosted CI unavailable** (not a test failure):
+
+- Annotation: payments failed, spending limit, Actions disabled
+- Jobs complete in ~seconds with empty `steps`
+- User said they don’t pay for GitHub Actions / skip GHA
+- No workflow / no check runs
+
+Then the local gate in SKILL.md Phase 7 is the land gate. Merge if it passes
+and GitHub does not **block** the PR (reviews, conflicts, required checks on
+Pro/public).
+
+Do **not**:
+
+- Ask the user to pay for Actions or raise a spending limit
+- Make the repo public to get free minutes (tenant sites often contain
+  copyrighted books, unpublished corpus, and product IP)
+- Use `gh pr merge --admin`
+- Wait indefinitely on a billing-red check
+
+If merge is blocked because **required** status checks never ran, stop and say
+so. Dropping the requirement is a GitHub settings change the user can make;
+this skill does not bypass it.
+
 ## Stop conditions (report and wait)
 
 - Protected branch requires reviews you cannot satisfy
-- CI red and out of scope / needs secrets or external services
+- Hosted tests **ran** and failed, and the failure is out of scope / needs secrets or external services
+- Required status checks block merge and hosted CI is unavailable (no `--admin`)
 - Conflict between branch intent and `origin/main` you cannot resolve without product input
 - `git branch -d` refused after a supposed merge
 - Detached production deploy hooks (hand off to `git-github-expert` if they also want `vercel --prod`)

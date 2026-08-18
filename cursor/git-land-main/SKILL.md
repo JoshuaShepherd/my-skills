@@ -2,19 +2,23 @@
 name: git-land-main
 description: >-
   Safely land one or many topic branches onto main via GitHub PR: inventory,
-  commit leftovers, push, open/update PR, wait for green CI, merge or squash
-  (repo norm), sync local main, then delete local/remote branches only after
-  main contains the work. Use when the user asks to merge/squash/commit/PR/push
-  to main, land a branch, land multiple branches, clean up merged branches, or
-  close out feature/fix/chore/slice branches. Never commit or push directly to
-  main; never force-push main; never delete a branch until origin/main has it.
+  commit leftovers, push, open/update PR, verify (hosted Actions if it actually
+  ran, else a local gate), merge or squash (repo norm), sync local main, then
+  delete local/remote branches only after main contains the work. Use when the
+  user asks to merge/squash/commit/PR/push to main, land a branch, land multiple
+  branches, clean up merged branches, or close out feature/fix/chore/slice
+  branches. Never commit or push directly to main; never force-push main; never
+  delete a branch until origin/main has it. GitHub Actions billing is not a
+  merge blocker; do not make repos public to get free minutes.
 ---
 
 # Git land → main
 
 Walk **one branch or a queue of branches** onto `main` the safe way: topic
-branch → commit → push → PR → green CI → merge/squash → sync `main` → delete
-branches. Nothing is deleted until `origin/main` contains the work.
+branch → commit → push → PR → verify → merge/squash → sync `main` → delete
+branches. Nothing is deleted until `origin/main` contains the work. Verify
+means **hosted Actions if jobs actually ran**, otherwise a **local gate**.
+A GitHub red X from billing / spending limits is not a failed test.
 
 **Outcome when done**
 
@@ -28,7 +32,10 @@ branches. Nothing is deleted until `origin/main` contains the work.
 - Never commit, amend, or push directly to `main` / `master`
 - Never force-push `main` / `master`
 - Never `--no-verify` unless the user explicitly requests it
-- Never merge a red PR; fix CI (or report unblockers) first
+- Never merge when **verification failed** (hosted tests that ran, or the local gate)
+- Hosted Actions **unavailable** (billing, spending limit, disabled, jobs never started) is not a failed gate — run the local gate and land if it passes
+- Never ask the user to pay for GitHub Actions, and never make a repo public, to unblock a land
+- Never `--admin` to bypass required status checks or reviews
 - Never discard uncommitted work or drop stashes without an explicit order
 - Never commit secrets (`.env`, `.env.local`, credentials, private keys)
 - Never `git branch -D` / `git push --delete` until merge is **confirmed on `origin/main`**
@@ -57,7 +64,7 @@ git-land-main:
 - [ ] 4 Update branch from origin/main
 - [ ] 5 Push
 - [ ] 6 PR open / updated vs main
-- [ ] 7 CI green + mergeable
+- [ ] 7 Merge gate green (hosted CI that ran, else local) + mergeable
 - [ ] 8 Merge PR (squash or merge)
 - [ ] 9 Sync local main; verify work is on origin/main
 - [ ] 10 Delete branch (local + remote) only after verify
@@ -216,8 +223,8 @@ gh pr create --base main --title "<conventional title>" --body "$(cat <<'EOF'
 - <1–3 bullets>
 
 ## Test plan
-- [ ] Local typecheck / lint / relevant checks green
-- [ ] CI green on PR
+- [ ] Local typecheck / unit tests green
+- [ ] Hosted CI green if Actions ran; else local gate (do not wait on billing-red)
 - [ ] Spot-check: <paths touched>
 
 EOF
@@ -230,28 +237,65 @@ Title: match recent merged PRs.
 
 ---
 
-## Phase 7 — CI + merge readiness
+## Phase 7 — Merge gate (hosted CI or local)
+
+The gate is **verification**, not billed GitHub minutes. Classify checks before
+waiting or stopping.
 
 ```bash
 gh pr checks
 gh pr view --json mergeable,mergeStateStatus,statusCheckRollup,reviewDecision
 ```
 
-| Situation | Action |
-|-----------|--------|
-| Checks pending | Wait / re-poll; do not merge |
-| Checks failed (in scope) | Fix, commit, push, re-poll |
-| Flaky / unrelated | Merge `origin/main` into the branch; if still red and out of scope, report and stop |
-| Merge conflicts | Merge `origin/main` into the branch, resolve, push |
-| Reviews required and blocking | Ask the user; do not bypass protections |
+If a check failed in a few seconds with empty steps, read the run annotations
+(`gh run view <id>`). Billing / spending-limit text means jobs **never started**.
 
-Optional local gates before first push (if the repo has them): `pnpm typecheck` / `pnpm lint` / `pnpm build:check`. Do not skip red CI.
+### Hosted CI classification
+
+| Situation | Classification | Action |
+|-----------|----------------|--------|
+| Jobs in progress / queued with a runner | Hosted CI running | Wait / re-poll; do not merge |
+| Required (or all) checks success | Hosted CI green | Phase 8 |
+| Failure with install / typecheck / test / lint logs | Tests failed | Fix, commit, push, re-poll |
+| Failure in seconds, empty steps, annotation about payments, spending limit, or Actions disabled | Hosted CI **unavailable** | Local gate. Do not ask to pay. Do not make the repo public |
+| No checks configured | Hosted CI unused | Local gate |
+| User said they don’t pay for Actions / skip GHA | Hosted CI out of scope | Local gate |
+| Flaky / unrelated after merging `origin/main` | Out of scope | If hosted was otherwise usable: report and stop. If hosted is unavailable: local gate |
+| Merge conflicts | — | Merge `origin/main` into the branch, resolve, push |
+| Reviews required and blocking | — | Ask the user; do not `--admin` |
+| GitHub **blocks** merge on required checks that never ran (Pro/public protection) | Blocked | Stop. Do not `--admin`. User may drop the requirement; paying is their choice, not this skill’s unblock |
+
+Private GitHub Free repos typically **cannot** require status checks. A
+billing-red X there does not block `gh pr merge`.
+
+### Local gate (hosted unavailable or unused)
+
+Run from the repo root. Fail-stop. Prefer `pnpm` when the repo uses it.
+
+If `package.json` has `land`, `check`, or `build:check`, run that **instead** of
+inventing a pack. Otherwise, first match per slot:
+
+1. **Types:** `typecheck` (not `typecheck:tools` / `typecheck:all` unless that is the documented land command)
+2. **Unit tests:** `test:run`, else `vitest run`, else skip and note it
+3. **Lint:** `lint` only if the script exists and is the repo’s usual cheap gate
+
+Do **not** default to Playwright e2e or `pnpm build` locally (slow, env-heavy).
+Note them as not run in the done report.
+
+If the local gate fails: fix at the lowest layer, commit, push, re-run. Same as
+a real hosted failure.
+
+If it passes and the PR is mergeable (not blocked by reviews or conflicts):
+Phase 8. Record `gate=local` plus the commands in the done report.
+
+Never flip repo visibility, buy minutes, or `--admin` to get a green GitHub check.
 
 ---
 
 ## Phase 8 — Merge
 
-Only when CI is green and the PR is mergeable.
+Only when the merge gate is green (hosted CI that **ran**, or local gate) and
+the PR is mergeable.
 
 ```bash
 # merge commit (history shows "Merge pull request #N")
@@ -323,10 +367,11 @@ If the queue has more entries: return to Phase 2.
 When the queue is empty, report:
 
 1. Branches landed (name + PR URL + squash vs merge)
-2. Confirm: on `main`, synced with `origin/main`
-3. Branches deleted (local / remote)
-4. Skipped / still open (with why)
-5. Stashes left untouched, secrets excluded, other follow-ups
+2. Merge gate used: hosted CI, or local (commands run) because Actions was unavailable
+3. Confirm: on `main`, synced with `origin/main`
+4. Branches deleted (local / remote)
+5. Skipped / still open (with why)
+6. Stashes left untouched, secrets excluded, other follow-ups
 
 ---
 
@@ -343,3 +388,5 @@ When the queue is empty, report:
 - Dropping stashes
 - `--admin` merge / `--no-verify`
 - Rebase + force-push of a shared topic branch without an explicit ask
+- Refusing to merge solely because GitHub Actions could not start (billing / spending limit)
+- Making a repo public, or asking the user to pay for Actions, to unblock a land
